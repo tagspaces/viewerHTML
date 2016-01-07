@@ -1,5 +1,5 @@
 {
-  "name": "viewerHTML",
+  "name": "HTML Reader",
   "id": "viewerHTML",
   "description": "A TagSpaces extension allowing open HTML files.",
   "type": "viewer",
