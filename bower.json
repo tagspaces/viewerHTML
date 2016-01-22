@@ -16,7 +16,7 @@
     "html",
     "viewer"
   ],
-  "license": "",
+  "license": "MIT",
   "main": [
     "extension.js"
   ],
