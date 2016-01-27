@@ -4,17 +4,15 @@
 define(function(require, exports, module) {
   "use strict";
 
-  console.log("Loading viewerHTML");
-
   var extensionID = "viewerHTML"; // ID should be equal to the directory name where the ext. is located
   var extensionSupportedFileTypes = ["html", "htm"];
 
-  var TSCORE = require("tscore");
+  console.log("Loading " + extensionID);
 
+  var TSCORE = require("tscore");
   var containerElID;
   var $containerElement;
   var currentFilePath;
-
   var extensionDirectory = TSCORE.Config.getExtensionPath() + "/" + extensionID;
 
   function init(filePath, containerElementID) {
@@ -58,17 +56,17 @@ define(function(require, exports, module) {
         console.log("Message: " + e);
     },false); */
 
-  };
+  }
 
   function setFileType(fileType) {
 
     console.log("setFileType not supported on this extension");
-  };
+  }
 
   function viewerMode(isViewerMode) {
 
     console.log("viewerMode not supported on this extension");
-  };
+  }
 
   function setContent(content) {
     var fileDirectory = TSCORE.TagUtils.extractContainingDirectoryPath(currentFilePath);
@@ -95,12 +93,12 @@ define(function(require, exports, module) {
         contentWindow.setContent(cleanedBodyContent, fileDirectory);
       }, 500);
     }
-  };
+  }
 
   function getContent() {
 
     console.log("Not implemented");
-  };
+  }
   
   exports.init = init;
   exports.getContent = getContent;
