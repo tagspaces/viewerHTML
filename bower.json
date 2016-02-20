@@ -1,7 +1,7 @@
 {
   "name": "HTML Reader",
   "id": "viewerHTML",
-  "description": "A TagSpaces extension allowing open HTML files.",
+  "description": "A TagSpaces extension allowing opening of HTML files.",
   "type": "viewer",
   "version": "1.0.0",
   "dependencies": {
