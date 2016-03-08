@@ -1,11 +1,11 @@
 {
-    "zoomOut": "Zoom Out",
-    "zoomIn": "Zoom In",
-    "zoomReset": "Zoom Reset",
-    "changeTheme": "Change Theme",
-    "resetTheme": "Reset Theme",
-    "print": "Print",
-    "about": "About",
-    "aboutTitle": "About ViewerHTML extension",
+    "zoomOut": "Отдалечаване",
+    "zoomIn": "Приближаване",
+    "zoomReset": "Възстановяване на приближаването",
+    "changeTheme": "Смяна на темата",
+    "resetTheme": "Възстановяване на темата",
+    "print": "Принтирай",
+    "about": "Относно",
+    "aboutTitle": "За ViewerHTML плъгина",
     "-": "-"
 }
