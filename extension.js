@@ -71,6 +71,10 @@ define(function(require, exports, module) {
   function setContent(content) {
     var fileDirectory = TSCORE.TagUtils.extractContainingDirectoryPath(currentFilePath);
 
+    if (isWeb) {
+      fileDirectory = TSCORE.TagUtils.extractContainingDirectoryPath(location.href) + "/" + fileDirectory;
+    }
+
     var bodyRegex = /\<body[^>]*\>([^]*)\<\/body/m; // jshint ignore:line
     var bodyContent;
 

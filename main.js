@@ -6,6 +6,8 @@
 
 var isCordova;
 var isWin;
+var isWeb;
+
 var $htmlContent;
 
 $(document).ready(function() {
@@ -23,6 +25,7 @@ $(document).ready(function() {
 
   isCordova = parent.isCordova;
   isWin = parent.isWin;
+  isWeb = parent.isWeb;
 
   $htmlContent = $("#htmlContent");
 
@@ -123,36 +126,45 @@ function setContent(content, fileDirectory) {
 
   $htmlContent.append(content);
 
-  $htmlContent.find("a[href]").each(function() {
-    var currentSrc = $(this).attr("href");
-    if (currentSrc.indexOf("http://") === 0 ||
-        currentSrc.indexOf("https://") === 0 ||
-        currentSrc.indexOf("file://") === 0 ||
-        currentSrc.indexOf("data:") === 0) {
-      // do nothing if src begins with http(s):// or data:
-    } else {
-      var path = "file://" + fileDirectory + "/" + currentSrc;
-      $(this).attr("href", path);
-    }
-  });
+  if (fileDirectory.indexOf("file://") === 0) {
+    fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
+  }
+
+  var hasURLProtocol = function(url) {
+    return (
+      url.indexOf("http://") === 0 ||
+      url.indexOf("https://") === 0 ||
+      url.indexOf("file://") === 0 ||
+      url.indexOf("data://") === 0
+    );
+  };
 
   // fixing embedding of local images
   $htmlContent.find("img[src]").each(function() {
     var currentSrc = $(this).attr("src");
-    if (currentSrc.indexOf("http://") === 0 ||
-        currentSrc.indexOf("https://") === 0 ||
-        currentSrc.indexOf("file://") === 0 ||
-        currentSrc.indexOf("data:") === 0) {
-      // do nothing if src begins with http(s):// or data:
-    } else {
-      $(this).attr("src", "file://" + fileDirectory + "/" + currentSrc);
+    if (!hasURLProtocol(currentSrc)) {
+      var path = (isWeb?"":"file://") + fileDirectory + "/" + currentSrc;
+      $(this).attr("src", path);
     }
   });
 
-  $htmlContent.find("a").bind('click', function(e) {
-    e.preventDefault();
-    var msg = {command: "openLinkExternally", link : $(this).attr("href")};
-    window.parent.postMessage(JSON.stringify(msg), "*");
+  $htmlContent.find("a[href]").each(function() {
+    var currentSrc = $(this).attr("href");
+    var path;
+
+    if (!hasURLProtocol(currentSrc)) {
+      var path = (isWeb?"":"file://") + fileDirectory + "/" + currentSrc;
+      $(this).attr("href", path);
+    }
+
+    $(this).bind('click', function(e) {
+      e.preventDefault();
+      if (path) {
+        currentSrc = encodeURIComponent(path);
+      }
+      var msg = {command: "openLinkExternally", link : currentSrc};
+      window.parent.postMessage(JSON.stringify(msg), "*");
+    });
   });
 
 }
