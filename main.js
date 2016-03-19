@@ -143,7 +143,7 @@ function setContent(content, fileDirectory) {
   $htmlContent.find("img[src]").each(function() {
     var currentSrc = $(this).attr("src");
     if (!hasURLProtocol(currentSrc)) {
-      var path = (isWeb?"":"file://") + fileDirectory + "/" + currentSrc;
+      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
       $(this).attr("src", path);
     }
   });
@@ -153,7 +153,7 @@ function setContent(content, fileDirectory) {
     var path;
 
     if (!hasURLProtocol(currentSrc)) {
-      var path = (isWeb?"":"file://") + fileDirectory + "/" + currentSrc;
+      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
       $(this).attr("href", path);
     }
 
