@@ -135,7 +135,7 @@ function setContent(content, fileDirectory) {
       url.indexOf("http://") === 0 ||
       url.indexOf("https://") === 0 ||
       url.indexOf("file://") === 0 ||
-      url.indexOf("data://") === 0
+      url.indexOf("data:") === 0
     );
   };
 
