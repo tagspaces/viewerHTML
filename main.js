@@ -27,6 +27,20 @@ $(document).ready(function() {
   isWin = parent.isWin;
   isWeb = parent.isWeb;
 
+  $('#aboutExtensionModal').on('show.bs.modal', function() {
+    $.ajax({
+      url: 'README.md',
+      type: 'GET'
+    })
+    .done(function(mdData) {
+      //console.log("DATA: " + mdData);
+      $("#aboutExtensionModal .modal-body").html(marked(mdData));
+    })
+    .fail(function(data) {
+      console.warn("Loading file failed " + data);
+    });
+  });
+
   $htmlContent = $("#htmlContent");
 
   var styles = ['', 'solarized-dark', 'github', 'metro-vibes', 'clearness', 'clearness-dark'];
