@@ -62,7 +62,6 @@ $(document).ready(function() {
     });
   }
 
-
   $htmlContent = $("#htmlContent");
 
   var styles = ['', 'solarized-dark', 'github', 'metro-vibes', 'clearness', 'clearness-dark'];
@@ -159,7 +158,6 @@ $(document).ready(function() {
 
 function setContent(content, fileDirectory) {
   $htmlContent = $("#htmlContent");
-
   $htmlContent.append(content);
 
   if (fileDirectory.indexOf("file://") === 0) {
