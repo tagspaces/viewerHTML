@@ -130,7 +130,6 @@ $(document).ready(function() {
     window.print();
   });
 
-
   if (isCordova) {
     $("#printButton").hide();
   }
