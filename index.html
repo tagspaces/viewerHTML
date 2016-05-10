@@ -20,6 +20,18 @@
   <!--link rel="stylesheet" href="readability/readability.css" /-->
 </head>
 <body>
+<div id="searchToolbar" style="display: none;">
+  <div class="flexLayout">
+    <button class="btn btn-link" id="clearSearchButton" data-i18n="[title]ns.common:cancelSearchTooltip" title="Cancel Search">
+      <i class="fa fa-lg fa-eraser"></i>
+    </button>
+    <input class="flexMaxWidth" id="searchBox" data-i18n="[placeholder]ns.common:searchPlaceholder" type="text" placeholder="Search">
+    </button>
+    <button class="btn btn-link" data-i18n="[title]ns.common:searchPlaceholder" id="searchButton" title="Search" onclick="doSearch();">
+      <i class="fa fa-lg fa-search"></i>
+    </button>
+  </div>
+</div>
 <div id="htmlContent"></div>
 <div class="btn-group dropup extMainMenu">
   <button type="button" class="btn roundButton dropdown-toggle viewerMainMenuButton" data-toggle="dropdown">
@@ -54,19 +66,6 @@
       <i class="fa fa-comment fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:about"></span>
     </a></li>
   </ul>
-</div>
-<div id="searchToolbar" style="display: none;">
-  <div class="flexLayout">
-    <button class="btn btn-link" id="clearSearchButton" data-i18n="[title]ns.common:cancelSearchTooltip" title="Cancel Search">
-      <i class="fa fa-lg fa-eraser"></i>
-    </button>
-    <input class="flexMaxWidth" id="searchBox" data-i18n="[placeholder]ns.common:searchPlaceholder" type="text" placeholder="Search" onkeyup="window.find();">
-    <i class="fa fa-lg fa-angle-double-down"></i>
-    </button>
-    <button class="btn btn-link" data-i18n="[title]ns.common:searchPlaceholder" id="searchButton" title="Search">
-      <i class="fa fa-lg fa-search"></i>
-    </button>
-  </div>
 </div>
 <div class="modal fullScreenMobile" id="aboutExtensionModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">

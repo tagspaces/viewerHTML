@@ -156,10 +156,6 @@ $(document).ready(function() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
 
-  $("#searchToolbar").on("click", function(e) {
-    $("#searchToolbar").show("slow");
-  });
-
   searchInput();
 });
 
@@ -209,21 +205,36 @@ function setContent(content, fileDirectory) {
       window.parent.postMessage(JSON.stringify(msg), "*");
     });
   });
-
 }
 
 function showSearchEngine(e) {
-  console.log("Show search engine field ");
-  $(document).ready(function() {
-    $("#searchToolbar").on("click", function(e) {
-      $("#searchToolbar").show("slow");
-    });
-  });
+  $('#searchToolbar').show();
+  $('#searchBox').focus();
+}
+
+function cancelSearch(e) {
+  $('#searchToolbar').hide();
+  $('#searchBox').hide();
 }
 
 function searchInput() {
-  window.addEventListener("keydown", function keydown(evt) {
+  // Search UI
+  $('#searchBox')
+  .keyup(function(e) {
+    if (e.keyCode === 13) { // Start the search on ENTER
+      doSearch();
+    } else if (e.keyCode == 27) { // Hide search on ESC
+      cancelSearch();
+    } else {
+      //do something
+    }
+  });
 
+  $('#clearSearchButton').on('click', function(e) {
+    cancelSearch();
+  });
+
+  window.addEventListener("keydown", function keydown(evt) {
     var handled = false;
     var cmd = (evt.ctrlKey ? 1 : 0) |
             (evt.altKey ? 2 : 0) |
@@ -248,13 +259,13 @@ function searchInput() {
         case 107: // FF "+" and "="
         case 187: // Chrome "+"
         case 171: // FF with German keyboard
-          //zoom in
+                  //zoom in
           handled = true;
           break;
         case 173: // FF/Mac "-"
         case 109: // FF "-"
         case 189: // Chrome "-"
-          //zoom out
+                  //zoom out
           handled = true;
           break;
         case 48: // "0"
@@ -296,4 +307,21 @@ function searchInput() {
       return;
     }
   });
+}
+
+function doSearch() {
+  var str = document.getElementById ("searchBox").value;
+  if (str == "") {
+    //alert ("Please enter some text to search!");
+    return;
+  }
+  if (window.find) {        // Firefox, Google Chrome, Safari
+    var found = window.find (str);
+    if (!found) {
+      //The following text was not found:\n" + str
+    }
+  }
+  else {
+    //Your browser does not support this example!
+  }
 }
