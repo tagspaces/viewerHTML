@@ -156,7 +156,6 @@ $(document).ready(function() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
 
-
   $("#searchButton").bind('click', function() {
     doSearch();
   });
@@ -219,13 +218,12 @@ function showSearchEngine(e) {
 
 function cancelSearch(e) {
   $('#searchToolbar').hide();
-  $('#searchBox').hide();
+  //$('#searchBox').hide();
 }
 
 function searchInput() {
   // Search UI
-  $('#searchBox')
-  .keyup(function(e) {
+  $('#searchBox').keyup(function(e) {
     if (e.keyCode === 13) { // Start the search on ENTER
       doSearch();
     } else if (e.keyCode == 27) { // Hide search on ESC
@@ -315,13 +313,13 @@ function searchInput() {
 }
 
 function doSearch() {
-  var str = document.getElementById ("searchBox").value;
+  var str = document.getElementById("searchBox").value;
   if (str == "") {
     //alert ("Please enter some text to search!");
     return;
   }
   if (window.find) {        // Firefox, Google Chrome, Safari
-    var found = window.find (str);
+    var found = window.find(str);
     if (!found) {
       //The following text was not found:\n" + str
     }
@@ -330,3 +328,4 @@ function doSearch() {
     //Your browser does not support this example!
   }
 }
+
