@@ -12,10 +12,10 @@ var $htmlContent;
 
 $(document).ready(function() {
   function getParameterByName(name) {
-    name = name.replace(/[\[]/ , "\\\[").replace(/[\]]/ , "\\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)") ,
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
             results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g , " "));
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 
   var locale = getParameterByName("locale");
@@ -27,19 +27,19 @@ $(document).ready(function() {
   isWin = parent.isWin;
   isWeb = parent.isWeb;
 
-  $(document).on('drop dragend dragenter dragover' , function(event) {
+  $(document).on('drop dragend dragenter dragover', function(event) {
     event.preventDefault();
   });
 
-  $('#aboutExtensionModal').on('show.bs.modal' , function() {
+  $('#aboutExtensionModal').on('show.bs.modal', function() {
     $.ajax({
-      url: 'README.md' ,
+      url: 'README.md',
       type: 'GET'
     }).done(function(mdData) {
       //console.log("DATA: " + mdData);
       if (marked) {
         var modalBody = $("#aboutExtensionModal .modal-body");
-        modalBody.html(marked(mdData , {sanitize: true}));
+        modalBody.html(marked(mdData, {sanitize: true}));
         handleLinks(modalBody);
       } else {
         console.log("markdown to html transformer not found");
@@ -52,10 +52,10 @@ $(document).ready(function() {
   function handleLinks($element) {
     $element.find("a[href]").each(function() {
       var currentSrc = $(this).attr("href");
-      $(this).bind('click' , function(e) {
+      $(this).bind('click', function(e) {
         e.preventDefault();
-        var msg = {command: "openLinkExternally" , link: currentSrc};
-        window.parent.postMessage(JSON.stringify(msg) , "*");
+        var msg = {command: "openLinkExternally", link: currentSrc};
+        window.parent.postMessage(JSON.stringify(msg), "*");
       });
     });
   }
@@ -63,13 +63,13 @@ $(document).ready(function() {
 
   $htmlContent = $("#htmlContent");
 
-  var styles = ['' , 'solarized-dark' , 'github' , 'metro-vibes' , 'clearness' , 'clearness-dark'];
+  var styles = ['', 'solarized-dark', 'github', 'metro-vibes', 'clearness', 'clearness-dark'];
   var currentStyleIndex = 0;
   if (extSettings && extSettings.styleIndex) {
     currentStyleIndex = extSettings.styleIndex;
   }
 
-  var zoomSteps = ['zoomSmallest' , 'zoomSmaller' , 'zoomSmall' , 'zoomDefault' , 'zoomLarge' , 'zoomLarger' , 'zoomLargest'];
+  var zoomSteps = ['zoomSmallest', 'zoomSmaller', 'zoomSmall', 'zoomDefault', 'zoomLarge', 'zoomLarger', 'zoomLargest'];
   var currentZoomState = 3;
   if (extSettings && extSettings.zoomState) {
     currentZoomState = extSettings.zoomState;
@@ -78,7 +78,7 @@ $(document).ready(function() {
   $htmlContent.removeClass();
   $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
 
-  $("#changeStyleButton").bind('click' , function() {
+  $("#changeStyleButton").bind('click', function() {
     currentStyleIndex = currentStyleIndex + 1;
     if (currentStyleIndex >= styles.length) {
       currentStyleIndex = 0;
@@ -88,14 +88,14 @@ $(document).ready(function() {
     saveExtSettings();
   });
 
-  $("#resetStyleButton").bind('click' , function() {
+  $("#resetStyleButton").bind('click', function() {
     currentStyleIndex = 0;
     $htmlContent.removeClass();
     $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
     saveExtSettings();
   });
 
-  $("#zoomInButton").bind('click' , function() {
+  $("#zoomInButton").bind('click', function() {
     currentZoomState++;
     if (currentZoomState >= zoomSteps.length) {
       currentZoomState = 6;
@@ -105,7 +105,7 @@ $(document).ready(function() {
     saveExtSettings();
   });
 
-  $("#zoomOutButton").bind('click' , function() {
+  $("#zoomOutButton").bind('click', function() {
     currentZoomState--;
     if (currentZoomState < 0) {
       currentZoomState = 0;
@@ -115,7 +115,7 @@ $(document).ready(function() {
     saveExtSettings();
   });
 
-  $("#zoomResetButton").bind('click' , function() {
+  $("#zoomResetButton").bind('click', function() {
     currentZoomState = 3;
     $htmlContent.removeClass();
     $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
@@ -136,35 +136,41 @@ $(document).ready(function() {
 
   // Init internationalization
   $.i18n.init({
-    ns: {namespaces: ['ns.viewerHTML']} ,
-    debug: true ,
-    lng: locale ,
+    ns: {namespaces: ['ns.viewerHTML']},
+    debug: true,
+    lng: locale,
     fallbackLng: 'en_US'
-  } , function() {
+  }, function() {
     $('[data-i18n]').i18n();
   });
 
   function saveExtSettings() {
     var settings = {
-      "styleIndex": currentStyleIndex ,
+      "styleIndex": currentStyleIndex,
       "zoomState": currentZoomState
     };
-    localStorage.setItem('viewerHTMLSettings' , JSON.stringify(settings));
+    localStorage.setItem('viewerHTMLSettings', JSON.stringify(settings));
   }
 
   function loadExtSettings() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
 
+  $("#searchToolbar").on("click", function(e) {
+    $("#searchToolbar").show("slow");
+  });
+
+  searchInput();
 });
 
-function setContent(content , fileDirectory) {
+
+function setContent(content, fileDirectory) {
   $htmlContent = $("#htmlContent");
 
   $htmlContent.append(content);
 
   if (fileDirectory.indexOf("file://") === 0) {
-    fileDirectory = fileDirectory.substring(("file://").length , fileDirectory.length);
+    fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
   }
 
   var hasURLProtocol = function(url) {
@@ -181,7 +187,7 @@ function setContent(content , fileDirectory) {
     var currentSrc = $(this).attr("src");
     if (!hasURLProtocol(currentSrc)) {
       var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-      $(this).attr("src" , path);
+      $(this).attr("src", path);
     }
   });
 
@@ -191,17 +197,103 @@ function setContent(content , fileDirectory) {
 
     if (!hasURLProtocol(currentSrc)) {
       var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-      $(this).attr("href" , path);
+      $(this).attr("href", path);
     }
 
-    $(this).bind('click' , function(e) {
+    $(this).bind('click', function(e) {
       e.preventDefault();
       if (path) {
         currentSrc = encodeURIComponent(path);
       }
-      var msg = {command: "openLinkExternally" , link: currentSrc};
-      window.parent.postMessage(JSON.stringify(msg) , "*");
+      var msg = {command: "openLinkExternally", link: currentSrc};
+      window.parent.postMessage(JSON.stringify(msg), "*");
     });
   });
 
+}
+
+function showSearchEngine(e) {
+  console.log("Show search engine field ");
+  $(document).ready(function() {
+    $("#searchToolbar").on("click", function(e) {
+      $("#searchToolbar").show("slow");
+    });
+  });
+}
+
+function searchInput() {
+  window.addEventListener("keydown", function keydown(evt) {
+
+    var handled = false;
+    var cmd = (evt.ctrlKey ? 1 : 0) |
+            (evt.altKey ? 2 : 0) |
+            (evt.shiftKey ? 4 : 0) |
+            (evt.metaKey ? 8 : 0);
+    /*
+     First, handle the key bindings that are independent whether an input
+     control is selected or not.
+     */
+    if (cmd === 1 || cmd === 8 || cmd === 5 || cmd === 12) {
+      // either CTRL or META key with optional SHIFT.
+      switch (evt.keyCode) {
+        case 70://f
+          //open custom search/find text
+          handled = true;
+          break;
+        case 71: //g
+          //find next
+          handled = true;
+          break;
+        case 61:  // FF/Mac "="
+        case 107: // FF "+" and "="
+        case 187: // Chrome "+"
+        case 171: // FF with German keyboard
+          //zoom in
+          handled = true;
+          break;
+        case 173: // FF/Mac "-"
+        case 109: // FF "-"
+        case 189: // Chrome "-"
+          //zoom out
+          handled = true;
+          break;
+        case 48: // "0"
+        case 96: // "0" on Numpad of Swedish keyboard
+          //set scale
+          handled = true;
+          break;
+      }
+    }
+
+    // CTRL or META without shift
+    if (cmd === 1 || cmd === 8) {
+      switch (evt.keyCode) {
+        case 70:
+          showSearchEngine();//f
+        case 83: //s
+          //download/save file
+          handled = true;
+          break;
+      }
+    }
+
+    // CTRL+ALT or Option+Command
+    if (cmd === 3 || cmd === 10) {
+      switch (evt.keyCode) {
+        case 80: //p
+          //presentaion mode
+          handled = true;
+          break;
+        case 71: //g
+          //focus page number dialoge
+          handled = true;
+          break;
+      }
+    }
+
+    if (handled) {
+      evt.preventDefault();
+      return;
+    }
+  });
 }
