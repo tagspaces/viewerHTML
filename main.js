@@ -156,6 +156,11 @@ $(document).ready(function() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
 
+
+  $("#searchButton").bind('click', function() {
+    doSearch();
+  });
+
   searchInput();
 });
 
