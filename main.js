@@ -330,7 +330,6 @@ function doSearch() {
   if (window.find) {        // Firefox, Google Chrome, Safari
     found = window.find(str);
     var givenString = str;
-    
     var matches = $('#htmlContent *').
     addBack().
     contents().
