@@ -130,6 +130,10 @@ $(document).ready(function() {
     window.print();
   });
 
+  $("#findInFile").bind('click', function() {
+    showSearchEngine();
+  });
+
   if (isCordova) {
     $("#printButton").hide();
   }
@@ -212,12 +216,16 @@ function setContent(content, fileDirectory) {
 }
 
 function showSearchEngine(e) {
-  $('#searchToolbar').show();
+  $('#searchToolbar').slideDown(500);
+  // or $('#searchToolbar').show(); ever
+  $('#searchBox').val('');
   $('#searchBox').focus();
+  //$( "div" ).css( "visibility", "hidden" );
 }
 
 function cancelSearch(e) {
-  $('#searchToolbar').hide();
+  $('#searchToolbar').slideUp(500);
+  // or $('#searchToolbar').hide(); ever
   //$('#searchBox').hide();
 }
 
@@ -284,6 +292,7 @@ function searchInput() {
       switch (evt.keyCode) {
         case 70:
           showSearchEngine();//f
+          break;
         case 83: //s
           //download/save file
           handled = true;
@@ -314,18 +323,19 @@ function searchInput() {
 
 function doSearch() {
   var str = document.getElementById("searchBox").value;
-  if (str == "") {
+  if (str === "") {
     //alert ("Please enter some text to search!");
     return;
   }
+  var supported = false;
+  var found = false;
   if (window.find) {        // Firefox, Google Chrome, Safari
-    var found = window.find(str);
+    found = window.find(str);
+    $(str).scroll();
     if (!found) {
       //The following text was not found:\n" + str
     }
   }
   else {
-    //Your browser does not support this example!
   }
 }
-
