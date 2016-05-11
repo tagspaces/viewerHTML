@@ -324,14 +324,30 @@ function searchInput() {
 function doSearch() {
   var str = document.getElementById("searchBox").value;
   if (str === "") {
-    //alert ("Please enter some text to search!");
-    return;
+    return ;
   }
-  var supported = false;
-  var found = false;
+  var found;
   if (window.find) {        // Firefox, Google Chrome, Safari
     found = window.find(str);
-    $(str).scroll();
+    var givenString = str;
+    
+    var matches = $('#htmlContent *').
+    addBack().
+    contents().
+    filter(function(){
+      return this.nodeType === 3;
+    }).
+    filter(function(){
+      // Only match when contains given string anywhere in the text
+      if(this.nodeValue.indexOf(givenString) != -1)
+        return true;
+    }).first();
+
+    if(matches.length > 0){
+      var offset = $(matches).wrap('').parent().offset().top;
+      console.log(offset);
+      $('#htmlContent').animate({scrollTop: offset});
+    }
     if (!found) {
       //The following text was not found:\n" + str
     }
