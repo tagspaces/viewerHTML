@@ -67,6 +67,6 @@
     border-left: 0px;
     border-right: 0px;
 }
-.highlighted {
-    background-color:yellow;
+.highlight {
+    background-color: #FFFF88;
 }

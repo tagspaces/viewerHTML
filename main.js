@@ -322,32 +322,25 @@ function searchInput() {
 }
 
 function doSearch() {
-  var str = document.getElementById("searchBox").value;
-  if (str === "") {
+  var givenString = document.getElementById("searchBox").value;
+  if (givenString === "") {
     return;
   }
   var found;
   if (window.find) {        // Firefox, Google Chrome, Safari
-    found = window.find(str);
-    var givenString = str;
-    var matches = $('#htmlContent *').
-    addBack().
-    contents().
-    filter(function() {
-      return this.nodeType === 3;
-    }).
-    filter(function() {
-      // Only match when contains given string anywhere in the text
-      if (this.nodeValue.indexOf(givenString) != -1) {
-        return true;
-      }
-    }).first();
-
-    if (matches.length > 0) {
-      var offset = $(matches).wrap('').parent().offset().top;
-      console.log(offset);
-      $('#htmlContent').animate({scrollTop: offset});
-    }
+    $('#htmlContent').highlight(givenString, { caseSensitive: true });
+    found = window.find(givenString);
+    //
+    //var scrollPosition = (window.pageYOffset || found.scrollTop)  - (found.clientTop || 0);
+    //console.log(scrollPosition);
+    //var matches = $('#htmlContent *').first();
+    //
+    //if (matches.length > 0) {
+    //  var offset = $(matches).wrap('body').parent().offset().top;
+    //  console.log(offset);
+    //
+    //  $('#htmlContent').animate({scrollTop: offset});
+    //}
     if (!found) {
       //The following text was not found:\n" + str
     }
