@@ -328,19 +328,13 @@ function doSearch() {
   }
   var found;
   if (window.find) {        // Firefox, Google Chrome, Safari
-    $('#htmlContent').highlight(givenString, { caseSensitive: true });
+    $('#htmlContent').highlight(givenString, {caseSensitive: true});
     found = window.find(givenString);
-    //
-    //var scrollPosition = (window.pageYOffset || found.scrollTop)  - (found.clientTop || 0);
-    //console.log(scrollPosition);
-    //var matches = $('#htmlContent *').first();
-    //
-    //if (matches.length > 0) {
-    //  var offset = $(matches).wrap('body').parent().offset().top;
-    //  console.log(offset);
-    //
-    //  $('#htmlContent').animate({scrollTop: offset});
-    //}
+
+    var matches = $('#htmlContent *').first();
+    var offset = $(matches).wrap('').parent().offset().top;
+    console.log(offset);
+    $(givenString).animate({scrollTop: offset});
     if (!found) {
       //The following text was not found:\n" + str
     }
