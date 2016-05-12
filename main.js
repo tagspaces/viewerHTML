@@ -270,13 +270,13 @@ function searchInput() {
         case 107: // FF "+" and "="
         case 187: // Chrome "+"
         case 171: // FF with German keyboard
-                  //zoom in
+          //zoom in
           handled = true;
           break;
         case 173: // FF/Mac "-"
         case 109: // FF "-"
         case 189: // Chrome "-"
-                  //zoom out
+          //zoom out
           handled = true;
           break;
         case 48: // "0"
@@ -324,7 +324,7 @@ function searchInput() {
 function doSearch() {
   var str = document.getElementById("searchBox").value;
   if (str === "") {
-    return ;
+    return;
   }
   var found;
   if (window.find) {        // Firefox, Google Chrome, Safari
@@ -333,16 +333,17 @@ function doSearch() {
     var matches = $('#htmlContent *').
     addBack().
     contents().
-    filter(function(){
+    filter(function() {
       return this.nodeType === 3;
     }).
-    filter(function(){
+    filter(function() {
       // Only match when contains given string anywhere in the text
-      if(this.nodeValue.indexOf(givenString) != -1)
+      if (this.nodeValue.indexOf(givenString) != -1) {
         return true;
+      }
     }).first();
 
-    if(matches.length > 0){
+    if (matches.length > 0) {
       var offset = $(matches).wrap('').parent().offset().top;
       console.log(offset);
       $('#htmlContent').animate({scrollTop: offset});
