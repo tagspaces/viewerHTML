@@ -223,8 +223,9 @@ function showSearchEngine(e) {
   //$( "div" ).css( "visibility", "hidden" );
 }
 
-function cancelSearch(e) {
+function cancelSearch() {
   $('#searchToolbar').slideUp(500);
+  $('#htmlContent').unhighlight();
   // or $('#searchToolbar').hide(); ever
   //$('#searchBox').hide();
 }
@@ -270,13 +271,13 @@ function searchInput() {
         case 107: // FF "+" and "="
         case 187: // Chrome "+"
         case 171: // FF with German keyboard
-          //zoom in
+                  //zoom in
           handled = true;
           break;
         case 173: // FF/Mac "-"
         case 109: // FF "-"
         case 189: // Chrome "-"
-          //zoom out
+                  //zoom out
           handled = true;
           break;
         case 48: // "0"
@@ -322,21 +323,37 @@ function searchInput() {
 }
 
 function doSearch() {
+  //$('#htmlContent').unhighlight();
+  $('#searchBox').attr('placeholder','Search');
   var givenString = document.getElementById("searchBox").value;
-  if (givenString === "") {
-    return;
-  }
-  var found;
-  if (window.find) {        // Firefox, Google Chrome, Safari
-    $('#htmlContent').highlight(givenString, {caseSensitive: true});
-    found = window.find(givenString);
 
-    var matches = $('#htmlContent *').first();
-    var offset = $(matches).wrap('').parent().offset().top;
-    console.log(offset);
-    $(givenString).animate({scrollTop: offset});
-    if (!found) {
-      //The following text was not found:\n" + str
+  var selector = $('#htmlContent') || 'body';
+  var topOfContent = $(selector).animate({scrollTop: $('#htmlContent').offset().top}, "fast");
+
+  var found, getSelection;
+  if (window.find) { // Firefox, Google Chrome, Safari
+    found = window.find(givenString);
+    $('#htmlContent').highlight(givenString, {wordsOnly: false});
+    getSelection = window.getSelection();
+
+    console.log(getSelection);
+
+    var searchTermRegEx = new RegExp(found, "ig");
+    var matches = $(selector).text().match(searchTermRegEx);
+    if (matches) {
+      if ($('.highlight:first').length) {//if match found, scroll to where the first one appears
+        //$(selector).animate({scrollTop: $('.highlight:first').offset().top}, "fast");
+        $(selector).animate({scrollTo: getSelection}, "fast");
+      } else {
+
+      }
+    }
+    var caseSensitiveString = $('#htmlContent').highlight(givenString, {wordsOnly: false});
+    if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
+      $('#htmlContent').unhighlight();
+      $('#searchBox').val('');
+      $('#searchBox').attr('placeholder','Search text not found. Try again.');
+      return topOfContent;
     }
   }
   else {
