@@ -271,13 +271,13 @@ function searchInput() {
         case 107: // FF "+" and "="
         case 187: // Chrome "+"
         case 171: // FF with German keyboard
-                  //zoom in
+          //zoom in
           handled = true;
           break;
         case 173: // FF/Mac "-"
         case 109: // FF "-"
         case 189: // Chrome "-"
-                  //zoom out
+          //zoom out
           handled = true;
           break;
         case 48: // "0"
@@ -324,19 +324,17 @@ function searchInput() {
 
 function doSearch() {
   //$('#htmlContent').unhighlight();
-  $('#searchBox').attr('placeholder','Search');
+  $('#searchBox').attr('placeholder', 'Search');
   var givenString = document.getElementById("searchBox").value;
 
   var selector = $('#htmlContent') || 'body';
   var topOfContent = $(selector).animate({scrollTop: $('#htmlContent').offset().top}, "fast");
-
+  var caseSensitiveString = $('#htmlContent').highlight(givenString, {wordsOnly: false});
   var found, getSelection;
   if (window.find) { // Firefox, Google Chrome, Safari
     found = window.find(givenString);
     $('#htmlContent').highlight(givenString, {wordsOnly: false});
     getSelection = window.getSelection();
-
-    console.log(getSelection);
 
     var searchTermRegEx = new RegExp(found, "ig");
     var matches = $(selector).text().match(searchTermRegEx);
@@ -345,17 +343,12 @@ function doSearch() {
         //$(selector).animate({scrollTop: $('.highlight:first').offset().top}, "fast");
         $(selector).animate({scrollTo: getSelection}, "fast");
       } else {
-
       }
     }
-    var caseSensitiveString = $('#htmlContent').highlight(givenString, {wordsOnly: false});
-    if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
-      $('#htmlContent').unhighlight();
-      $('#searchBox').val('');
-      $('#searchBox').attr('placeholder','Search text not found. Try again.');
-      return topOfContent;
-    }
-  }
-  else {
+  } else if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
+    $('#htmlContent').unhighlight();
+    $('#searchBox').val('');
+    $('#searchBox').attr('placeholder', 'Search text not found. Try again.');
+    return topOfContent;
   }
 }
