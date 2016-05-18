@@ -57,6 +57,7 @@
     background-color:#FF9;
     color:#555;
 }
+
 #searchToolbar {
     border-radius: 0px;
     margin-left: 0px;
@@ -67,6 +68,17 @@
     border-left: 0px;
     border-right: 0px;
 }
+
 .highlight {
     background-color: #FFFF88;
+}
+
+#searchExtButton {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#clearSearchExtButton {
+    padding-left: 20px;
+    padding-right: 20px;
 }

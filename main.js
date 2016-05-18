@@ -136,7 +136,7 @@ $(document).ready(function() {
     showSearchPanel();
   });
 
-  $("#searchButton").on('click', function() {
+  $("#searchExtButton").on('click', function() {
     doSearch();
   });
 
@@ -192,7 +192,7 @@ $(document).ready(function() {
       }
     });
 
-    $('#clearSearchButton').on('click', function(e) {
+    $('#clearSearchExtButton').on('click', function(e) {
       cancelSearch();
     });
 
