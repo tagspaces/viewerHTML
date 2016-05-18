@@ -1,5 +1,7 @@
 {
-  "findInFile": "Find In File",
+  "findInDocument": "Find in Document",
+  "startSearch": "Start Search",
+  "cancelSearch": "Cancel Search",
   "zoomOut": "Zoom Out",
   "zoomIn": "Zoom In",
   "zoomReset": "Zoom Reset",

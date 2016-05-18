@@ -7,6 +7,7 @@
   <script type="text/javascript" src="../../libs/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="../../libs/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../../libs/marked/marked.min.js"></script>
+  <script type="text/javascript" src="../../libs/mousetrap/mousetrap.min.js"></script>
   <!--script type="text/javascript" src="readability/readability.js"></script-->
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="lib/jquery.highlight.js"></script>
@@ -23,13 +24,13 @@
 <body>
 <div id="searchToolbar" style="display: none;">
   <div class="flexLayout">
-    <button class="btn btn-link" id="clearSearchButton" data-i18n="[title]ns.common:cancelSearchTooltip" title="Cancel Search">
+    <button class="btn btn-link" id="clearSearchButton" data-i18n="[title]ns.viewerHTML:cancelSearch">
       <i class="fa fa-lg fa-eraser"></i>
     </button>
-    <input class="flexMaxWidth" id="searchBox" data-i18n="[placeholder]ns.common:searchPlaceholder" type="text" placeholder="Search">
+    <input class="flexMaxWidth" id="searchBox" type="text" data-i18n="[placeholder]ns.viewerHTML:findInDocument">
     </button>
-    <button class="btn btn-link" data-i18n="[title]ns.common:searchPlaceholder" id="searchButton" title="Search" onclick="doSearch()">
-      <i class="fa fa-lg fa-search"></i>
+    <button class="btn btn-link" id="searchButton" data-i18n="[title]ns.viewerHTML:startSearch">
+      <i class="fa fa-lg fa-binoculars"></i>
     </button>
   </div>
 </div>
@@ -44,7 +45,7 @@
     </li>
     <li class="divider"></li>
     <li><a id="findInFile">
-      <i class="fa fa-search fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:findInFile"></span>
+      <i class="fa fa-binoculars fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:findInDocument"></span>
     </a></li>
     <li class="divider"></li>
     <li><a id="changeStyleButton">

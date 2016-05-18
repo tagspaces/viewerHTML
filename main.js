@@ -11,6 +11,7 @@ var isWeb;
 var $htmlContent;
 
 $(document).ready(function() {
+
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -19,6 +20,8 @@ $(document).ready(function() {
   }
 
   var locale = getParameterByName("locale");
+
+  var searchQuery = getParameterByName("query");
 
   var extSettings;
   loadExtSettings();
@@ -59,7 +62,6 @@ $(document).ready(function() {
       });
     });
   }
-
 
   $htmlContent = $("#htmlContent");
 
@@ -130,8 +132,12 @@ $(document).ready(function() {
     window.print();
   });
 
-  $("#findInFile").bind('click', function() {
-    showSearchEngine();
+  $("#findInFile").on('click', function() {
+    showSearchPanel();
+  });
+
+  $("#searchButton").on('click', function() {
+    doSearch();
   });
 
   if (isCordova) {
@@ -160,13 +166,45 @@ $(document).ready(function() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
 
-  $("#searchButton").bind('click', function() {
-    doSearch();
-  });
+  function showSearchPanel(e) {
+    //$('#searchToolbar').slideDown(500);
+    $('#searchToolbar').show();
+    $('#searchBox').val('');
+    $('#searchBox').focus();
+  }
 
-  searchInput();
+  function cancelSearch() {
+    //$('#searchToolbar').slideUp(500);
+    $('#htmlContent').unhighlight();
+    $('#searchToolbar').hide();
+    //$('#searchBox').hide();
+  }
+
+  function initSearch() {
+    // Search UI
+    $('#searchBox').keyup(function(e) {
+      if (e.keyCode === 13) { // Start the search on ENTER
+        doSearch();
+      } else if (e.keyCode == 27) { // Hide search on ESC
+        cancelSearch();
+      } else {
+        //do something
+      }
+    });
+
+    $('#clearSearchButton').on('click', function(e) {
+      cancelSearch();
+    });
+
+    Mousetrap.bind(['command+f', 'ctrl+f'], function(e) {
+      showSearchPanel();
+      return false;
+    });
+
+  }
+
+  initSearch();
 });
-
 
 function setContent(content, fileDirectory) {
   $htmlContent = $("#htmlContent");
@@ -212,113 +250,6 @@ function setContent(content, fileDirectory) {
       var msg = {command: "openLinkExternally", link: currentSrc};
       window.parent.postMessage(JSON.stringify(msg), "*");
     });
-  });
-}
-
-function showSearchEngine(e) {
-  $('#searchToolbar').slideDown(500);
-  // or $('#searchToolbar').show(); ever
-  $('#searchBox').val('');
-  $('#searchBox').focus();
-  //$( "div" ).css( "visibility", "hidden" );
-}
-
-function cancelSearch() {
-  $('#searchToolbar').slideUp(500);
-  $('#htmlContent').unhighlight();
-  // or $('#searchToolbar').hide(); ever
-  //$('#searchBox').hide();
-}
-
-function searchInput() {
-  // Search UI
-  $('#searchBox').keyup(function(e) {
-    if (e.keyCode === 13) { // Start the search on ENTER
-      doSearch();
-    } else if (e.keyCode == 27) { // Hide search on ESC
-      cancelSearch();
-    } else {
-      //do something
-    }
-  });
-
-  $('#clearSearchButton').on('click', function(e) {
-    cancelSearch();
-  });
-
-  window.addEventListener("keydown", function keydown(evt) {
-    var handled = false;
-    var cmd = (evt.ctrlKey ? 1 : 0) |
-            (evt.altKey ? 2 : 0) |
-            (evt.shiftKey ? 4 : 0) |
-            (evt.metaKey ? 8 : 0);
-    /*
-     First, handle the key bindings that are independent whether an input
-     control is selected or not.
-     */
-    if (cmd === 1 || cmd === 8 || cmd === 5 || cmd === 12) {
-      // either CTRL or META key with optional SHIFT.
-      switch (evt.keyCode) {
-        case 70://f
-          //open custom search/find text
-          handled = true;
-          break;
-        case 71: //g
-          //find next
-          handled = true;
-          break;
-        case 61:  // FF/Mac "="
-        case 107: // FF "+" and "="
-        case 187: // Chrome "+"
-        case 171: // FF with German keyboard
-          //zoom in
-          handled = true;
-          break;
-        case 173: // FF/Mac "-"
-        case 109: // FF "-"
-        case 189: // Chrome "-"
-          //zoom out
-          handled = true;
-          break;
-        case 48: // "0"
-        case 96: // "0" on Numpad of Swedish keyboard
-          //set scale
-          handled = true;
-          break;
-      }
-    }
-
-    // CTRL or META without shift
-    if (cmd === 1 || cmd === 8) {
-      switch (evt.keyCode) {
-        case 70:
-          showSearchEngine();//f
-          break;
-        case 83: //s
-          //download/save file
-          handled = true;
-          break;
-      }
-    }
-
-    // CTRL+ALT or Option+Command
-    if (cmd === 3 || cmd === 10) {
-      switch (evt.keyCode) {
-        case 80: //p
-          //presentaion mode
-          handled = true;
-          break;
-        case 71: //g
-          //focus page number dialoge
-          handled = true;
-          break;
-      }
-    }
-
-    if (handled) {
-      evt.preventDefault();
-      return;
-    }
   });
 }
 
