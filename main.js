@@ -187,8 +187,11 @@ $(document).ready(function() {
         doSearch();
       } else if (e.keyCode == 27) { // Hide search on ESC
         cancelSearch();
-      } else {
-        //do something
+      } else if (e.which === 32) {
+        e.preventDefault();
+        $('html, body').animate({
+          scrollTop: offsetForNextPage()
+        }, 1000);
       }
     });
 
@@ -200,7 +203,6 @@ $(document).ready(function() {
       showSearchPanel();
       return false;
     });
-
   }
 
   initSearch();
@@ -253,8 +255,20 @@ function setContent(content, fileDirectory) {
   });
 }
 
+function offsetForNextPage() {
+  var bottom = $(window).scrollTop() + $(window).height();
+  var result = $(window).scrollTop() + $(window).height() * 0.75; // minimum scroll amount
+  $('p, span, div').each(function(idx) {
+    if ($(this).offset().top >= bottom) {
+      return false;
+    }
+    result = Math.max($(this).offset().top, result);
+  });
+  return result;
+}
+
 function doSearch() {
-  //$('#htmlContent').unhighlight();
+  $('#htmlContent').unhighlight();
   $('#searchBox').attr('placeholder', 'Search');
   var givenString = document.getElementById("searchBox").value;
 
@@ -262,6 +276,7 @@ function doSearch() {
   var topOfContent = $(selector).animate({scrollTop: $('#htmlContent').offset().top}, "fast");
   var caseSensitiveString = $('#htmlContent').highlight(givenString, {wordsOnly: false});
   var found, getSelection;
+
   if (window.find) { // Firefox, Google Chrome, Safari
     found = window.find(givenString);
     $('#htmlContent').highlight(givenString, {wordsOnly: false});
@@ -270,16 +285,21 @@ function doSearch() {
     var searchTermRegEx = new RegExp(found, "ig");
     var matches = $(selector).text().match(searchTermRegEx);
     if (matches) {
-      if ($('.highlight:first').length) {//if match found, scroll to where the first one appears
-        //$(selector).animate({scrollTop: $('.highlight:first').offset().top}, "fast");
-        $(selector).animate({scrollTo: getSelection}, "fast");
+      if ($('.highlight').length) {//if match found, scroll to where the first one appears
+        $(selector).animate({scrollTo:($("*:contains('"+ givenString +"'):first").offset().top)},"fast");
+        //$(selector).animate({scrollTop: $('#htmlContent .highlight::selection').offset().top}, "fast");
+        //$(selector).animate({scrollTo: getSelection}, "fast");
       } else {
+        console.log("err");
       }
     }
-  } else if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
-    $('#htmlContent').unhighlight();
-    $('#searchBox').val('');
-    $('#searchBox').attr('placeholder', 'Search text not found. Try again.');
-    return topOfContent;
+    if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
+      $('#htmlContent').unhighlight();
+      $('#searchBox').val('');
+      $('#searchBox').attr('placeholder', 'Search text not found. Try again.');
+      return topOfContent;
+    }
+  } else {
+    console.log("Cant found string in content");
   }
 }
