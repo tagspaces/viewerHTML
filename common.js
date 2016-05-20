@@ -53,11 +53,6 @@ function initSearch() {
       doSearch();
     } else if (e.keyCode == 27) { // Hide search on ESC
       cancelSearch();
-    } else if (e.which === 32) {
-      e.preventDefault();
-      $('html, body').animate({
-        scrollTop: offsetForNextPage()
-      }, 1000);
     }
   });
 
@@ -65,18 +60,6 @@ function initSearch() {
     showSearchPanel();
     return false;
   });
-}
-
-function offsetForNextPage() {
-  var bottom = $(window).scrollTop() + $(window).height();
-  var result = $(window).scrollTop() + $(window).height() * 0.75; // minimum scroll amount
-  $('p, span, div').each(function(idx) {
-    if ($(this).offset().top >= bottom) {
-      return false;
-    }
-    result = Math.max($(this).offset().top, result);
-  });
-  return result;
 }
 
 function doSearch() {
