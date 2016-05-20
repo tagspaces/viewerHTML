@@ -2,7 +2,7 @@
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 
 "use strict";
-/* globals */
+/* globals Mousetrap */
 
 var isCordova;
 var isWin;
