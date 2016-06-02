@@ -30,32 +30,15 @@ define(function(require, exports, module) {
       //"nwfaketop": "",
       "src": extensionDirectory + "/index.html?&locale=" + TSCORE.currentLanguage,
     }));
-    
+
     TSCORE.IO.loadTextFilePromise(filePath).then(function(content) {
-      exports.setContent(content);
-    }, 
-    function(error) {
-      TSCORE.hideLoadingAnimation();
-      TSCORE.showAlertDialog("Loading " + filePath + " failed.");
-      console.error("Loading file " + filePath + " failed " + error);
-    });
-    /*window.addEventListener("message", receiveMessage, false);
-    function receiveMessage(event) {
-      console.log("Test event: " + event);
-      if (event.origin !== "http://example.org:8080") {
-        //TSCORE.openLinkExternally();
-      }
-    }*/
-
-    /* var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-    var eventer = window[eventMethod];
-    var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-    eventer(messageEvent,function(e) {
-        var key = e.message ? "message" : "data";
-        var data = e[key];
-        console.log("Message: " + e);
-    },false); */
-
+              exports.setContent(content);
+            },
+            function(error) {
+              TSCORE.hideLoadingAnimation();
+              TSCORE.showAlertDialog("Loading " + filePath + " failed.");
+              console.error("Loading file " + filePath + " failed " + error);
+            });
   }
 
   function setFileType(fileType) {
@@ -103,7 +86,7 @@ define(function(require, exports, module) {
 
     console.log("Not implemented");
   }
-  
+
   exports.init = init;
   exports.getContent = getContent;
   exports.setContent = setContent;

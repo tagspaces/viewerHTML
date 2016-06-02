@@ -11,14 +11,17 @@ var isWeb;
 var $htmlContent;
 
 $(document).ready(function() {
+
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-      results = regex.exec(location.search);
+            results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 
   var locale = getParameterByName("locale");
+
+  var searchQuery = getParameterByName("query");
 
   var extSettings;
   loadExtSettings();
@@ -35,18 +38,16 @@ $(document).ready(function() {
     $.ajax({
       url: 'README.md',
       type: 'GET'
-    })
-    .done(function(mdData) {
+    }).done(function(mdData) {
       //console.log("DATA: " + mdData);
       if (marked) {
         var modalBody = $("#aboutExtensionModal .modal-body");
-        modalBody.html(marked(mdData, { sanitize: true }));
+        modalBody.html(marked(mdData, {sanitize: true}));
         handleLinks(modalBody);
       } else {
         console.log("markdown to html transformer not found");
-      }  
-    })
-    .fail(function(data) {
+      }
+    }).fail(function(data) {
       console.warn("Loading file failed " + data);
     });
   });
@@ -56,7 +57,7 @@ $(document).ready(function() {
       var currentSrc = $(this).attr("href");
       $(this).bind('click', function(e) {
         e.preventDefault();
-        var msg = {command: "openLinkExternally", link : currentSrc};
+        var msg = {command: "openLinkExternally", link: currentSrc};
         window.parent.postMessage(JSON.stringify(msg), "*");
       });
     });
@@ -123,8 +124,11 @@ $(document).ready(function() {
     saveExtSettings();
   });
 
-  $("#printButton").on("click", function() {
-    $(".dropdown-menu").dropdown('toggle');
+  $("#aboutButton").on("click", function(e) {
+    $("#aboutExtensionModal").modal({show: true});
+  });
+
+  $("#printButton").on("click", function(e) {
     window.print();
   });
 
@@ -145,7 +149,7 @@ $(document).ready(function() {
   function saveExtSettings() {
     var settings = {
       "styleIndex": currentStyleIndex,
-      "zoomState":  currentZoomState
+      "zoomState": currentZoomState
     };
     localStorage.setItem('viewerHTMLSettings', JSON.stringify(settings));
   }
@@ -153,7 +157,6 @@ $(document).ready(function() {
   function loadExtSettings() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
-
 });
 
 function setContent(content, fileDirectory) {
@@ -166,10 +169,10 @@ function setContent(content, fileDirectory) {
 
   var hasURLProtocol = function(url) {
     return (
-      url.indexOf("http://") === 0 ||
-      url.indexOf("https://") === 0 ||
-      url.indexOf("file://") === 0 ||
-      url.indexOf("data:") === 0
+            url.indexOf("http://") === 0 ||
+            url.indexOf("https://") === 0 ||
+            url.indexOf("file://") === 0 ||
+            url.indexOf("data:") === 0
     );
   };
 
@@ -196,9 +199,8 @@ function setContent(content, fileDirectory) {
       if (path) {
         currentSrc = encodeURIComponent(path);
       }
-      var msg = {command: "openLinkExternally", link : currentSrc};
+      var msg = {command: "openLinkExternally", link: currentSrc};
       window.parent.postMessage(JSON.stringify(msg), "*");
     });
   });
-
 }
