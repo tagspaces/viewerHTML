@@ -8,28 +8,17 @@ var isCordova;
 var isWin;
 var isWeb;
 
-var $htmlContent;
-
 $(document).ready(function() {
-
   isCordova = parent.isCordova;
   isWin = parent.isWin;
   isWeb = parent.isWeb;
 
-  $htmlContent = $("#htmlContent");
-
-  $("#findInFile").on('click', function() {
-    showSearchPanel();
+// Disable drag events in extensions
+  $(document).on('drop dragend dragenter dragover', function(event) {
+    event.preventDefault();
   });
 
-  $("#searchExtButton").on('click', function() {
-    doSearch();
-  });
-
-  $('#clearSearchExtButton').on('click', function(e) {
-    cancelSearch();
-  });
-
+// Hide all menus in TS on click in extension
   $(document).on('click' , function(event) {
     fireHideAllMenusEvent();
   });
@@ -39,8 +28,59 @@ $(document).ready(function() {
     window.parent.postMessage(JSON.stringify(msg), "*");
   }
 
+// Init about box functionality
+  $('#aboutExtensionModal').on('show.bs.modal', function() {
+    $.ajax({
+      url: 'README.md',
+      type: 'GET'
+    }).done(function(mdData) {
+      //console.log("DATA: " + mdData);
+      if (marked) {
+        var modalBody = $("#aboutExtensionModal .modal-body");
+        modalBody.html(marked(mdData, {sanitize: true}));
+        handleLinks(modalBody);
+      } else {
+        console.log("markdown to html transformer not found");
+      }
+    }).fail(function(data) {
+      console.warn("Loading file failed " + data);
+    });
+  });
+
+  function handleLinks($element) {
+    $element.find("a[href]").each(function() {
+      var currentSrc = $(this).attr("href");
+      $(this).bind('click', function(e) {
+        e.preventDefault();
+        var msg = {command: "openLinkExternally", link: currentSrc};
+        window.parent.postMessage(JSON.stringify(msg), "*");
+      });
+    });
+  }
+
+  $("#aboutButton").on("click", function(e) {
+    $("#aboutExtensionModal").modal({show: true});
+  });
+
+// Activating the print functionality
+  $("#printButton").on("click", function(e) {
+    window.print();
+  });
+
+  if (isCordova) {
+    $("#printButton").hide();
+  }
+
   initSearch();
 });
+
+function getParameterByName(name) {
+  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 function showSearchPanel(e) {
   //$('#searchToolbar').slideDown(500);
   $('#searchToolbar').show();
@@ -56,7 +96,18 @@ function cancelSearch() {
 }
 
 function initSearch() {
-  // Search UI
+  $("#findInFile").on('click', function() {
+    showSearchPanel();
+  });
+
+  $("#searchExtButton").on('click', function() {
+    doSearch();
+  });
+
+  $('#clearSearchExtButton').on('click', function(e) {
+    cancelSearch();
+  });
+
   $('#searchBox').keyup(function(e) {
     if (e.keyCode === 13) { // Start the search on ENTER
       doSearch();
