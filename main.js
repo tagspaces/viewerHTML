@@ -1,12 +1,20 @@
 /* Copyright (c) 2013-2016 The TagSpaces Authors.
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 
-/* globals marked, Mousetrap */
+/* globals marked, Readability, Mousetrap */
 "use strict";
 
 var $htmlContent;
 
 $(document).ready(function() {
+
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(window.location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
   var locale = getParameterByName("locale");
 
   var searchQuery = getParameterByName("query");
@@ -105,6 +113,7 @@ $(document).ready(function() {
 });
 
 function setContent(content, fileDirectory) {
+  var isWeb;
   $htmlContent = $("#htmlContent");
   $htmlContent.append(content);
   var cleanedHTML = $htmlContent.append(content);
@@ -160,7 +169,7 @@ function setContent(content, fileDirectory) {
     var documentClone = document.cloneNode(true);
     var article = new Readability(document.baseURI, documentClone).parse();
     $(readabilityViewer).html(article.content);
-    readabilityViewer.style.fontSize ="large";// fontSize;//"large";
+    readabilityViewer.style.fontSize = fontSize;//"large";
     readabilityViewer.style.fontFamily = "Helvetica, Arial, sans-serif";
     readabilityViewer.style.background = "#ffffff";
     readabilityViewer.style.color = "";
