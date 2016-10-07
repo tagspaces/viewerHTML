@@ -167,9 +167,9 @@ function setContent(content, fileDirectory) {
   var fontSize = 14;
 
   $("#readabilityOn").on('click', function() {
-    var documentClone = document.cloneNode(true);
-    var article = new Readability(document.baseURI, documentClone).parse();
     try {
+      var documentClone = document.cloneNode(true);
+      var article = new Readability(document.baseURI, documentClone).parse();
       $(readabilityViewer).html(article.content);
       readabilityViewer.style.fontSize = fontSize;//"large";
       readabilityViewer.style.fontFamily = "Helvetica, Arial, sans-serif";
