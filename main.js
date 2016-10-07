@@ -116,7 +116,6 @@ function setContent(content, fileDirectory) {
   var isWeb;
   $htmlContent = $("#htmlContent");
   $htmlContent.append(content);
-  var cleanedHTML = $htmlContent.append(content);
 
   if (fileDirectory.indexOf("file://") === 0) {
     fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
@@ -124,44 +123,45 @@ function setContent(content, fileDirectory) {
 
   var hasURLProtocol = function(url) {
     return (
-            url.indexOf("http://") === 0 ||
-            url.indexOf("https://") === 0 ||
-            url.indexOf("file://") === 0 ||
-            url.indexOf("data:") === 0
+      url.indexOf("http://") === 0 ||
+      url.indexOf("https://") === 0 ||
+      url.indexOf("file://") === 0 ||
+      url.indexOf("data:") === 0
     );
   };
 
   // fixing embedding of local images
-  $htmlContent.find("img[src]").each(function() {
-    var currentSrc = $(this).attr("src");
-    if (!hasURLProtocol(currentSrc)) {
-      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-      $(this).attr("src", path);
-    }
-  });
-
-  $htmlContent.find("a[href]").each(function() {
-    var currentSrc = $(this).attr("href");
-    var path;
-
-    if (!hasURLProtocol(currentSrc)) {
-      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-      $(this).attr("href", path);
-    }
-
-    $(this).bind('click', function(e) {
-      e.preventDefault();
-      if (path) {
-        currentSrc = encodeURIComponent(path);
+  function fixingEmbeddingOfLocalImages() {
+    $htmlContent.find("img[src]").each(function() {
+      var currentSrc = $(this).attr("src");
+      if (!hasURLProtocol(currentSrc)) {
+        var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
+        $(this).attr("src", path);
       }
-      var msg = {command: "openLinkExternally", link: currentSrc};
-      window.parent.postMessage(JSON.stringify(msg), "*");
     });
-  });
+
+    $htmlContent.find("a[href]").each(function() {
+      var currentSrc = $(this).attr("href");
+      var path;
+
+      if (!hasURLProtocol(currentSrc)) {
+        var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
+        $(this).attr("href", path);
+      }
+
+      $(this).bind('click', function(e) {
+        e.preventDefault();
+        if (path) {
+          currentSrc = encodeURIComponent(path);
+        }
+        var msg = {command: "openLinkExternally", link: currentSrc};
+        window.parent.postMessage(JSON.stringify(msg), "*");
+      });
+    });
+  }
+  fixingEmbeddingOfLocalImages();
 
   // View readability mode
-
-
   var readabilityViewer = document.getElementById("htmlContent");
   var fontSize = 14;
 
@@ -173,46 +173,30 @@ function setContent(content, fileDirectory) {
     readabilityViewer.style.fontFamily = "Helvetica, Arial, sans-serif";
     readabilityViewer.style.background = "#ffffff";
     readabilityViewer.style.color = "";
-
-    $("#mhtmlViewer").html(article.content);
-    if ($("#mhtmlViewer").data('clicked', true)) {
-      $("#toSerifFont").show();
-      $("#toSansSerifFont").show();
-      $("#increasingFontSize").show();
-      $("#decreasingFontSize").show();
-      $("#readabilityOff").show();
-      $("#whiteBackgroundColor").show();
-      $("#blackBackgroundColor").show();
-      $("#sepiaBackgroundColor").show();
-      $("#themeStyle").show();
-      $("#readabilityFont").show();
-      $("#readabilityFontSize").show();
-      $("#readabilityOn").hide();
-      $("#changeStyleButton").hide();
-      $("#resetStyleButton").hide();
-    }
+    $("#readabilityOff").css("display","inline-block");
+    $("#themeStyle").show();
+    $("#readabilityFont").show();
+    $("#readabilityFontSize").show();
+    $("#readabilityOn").hide();
+    $("#changeStyleButton").hide();
+    $("#resetStyleButton").hide();
   });
 
   $("#readabilityOff").on('click', function() {
-    $("#mhtmlViewer").html(cleanedHTML);
+    $($htmlContent).empty();
+    $($htmlContent).append(content);
     readabilityViewer.style.fontSize = '';//"large";
     readabilityViewer.style.fontFamily = "";
     readabilityViewer.style.color = "";
     readabilityViewer.style.background = "";
-    $("#readabilityOff").hide();
-    $("#toSerifFont").hide();
-    $("#toSansSerifFont").hide();
-    $("#increasingFontSize").hide();
-    $("#decreasingFontSize").hide();
-    $("#whiteBackgroundColor").hide();
-    $("#blackBackgroundColor").hide();
-    $("#sepiaBackgroundColor").hide();
-    $("#themeStyle").hide();
-    $("#readabilityFont").hide();
-    $("#readabilityFontSize").hide();
     $("#readabilityOn").show();
     $("#changeStyleButton").show();
     $("#resetStyleButton").show();
+    $("#readabilityOff").hide();
+    $("#readabilityFont").hide();
+    $("#readabilityFontSize").hide();
+    $("#themeStyle").hide();
+    fixingEmbeddingOfLocalImages();
   });
 
   $("#toSansSerifFont").on('click', function(e) {
