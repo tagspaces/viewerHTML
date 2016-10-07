@@ -183,7 +183,7 @@ function setContent(content, fileDirectory) {
       $("#changeStyleButton").hide();
       $("#resetStyleButton").hide();
     } catch (e) {
-      console.log(e);
+      console.log("Error handling" + e);
     }
   });
 
