@@ -159,6 +159,7 @@ function setContent(content, fileDirectory) {
       });
     });
   }
+
   fixingEmbeddingOfLocalImages();
 
   // View readability mode
@@ -168,18 +169,22 @@ function setContent(content, fileDirectory) {
   $("#readabilityOn").on('click', function() {
     var documentClone = document.cloneNode(true);
     var article = new Readability(document.baseURI, documentClone).parse();
-    $(readabilityViewer).html(article.content);
-    readabilityViewer.style.fontSize = fontSize;//"large";
-    readabilityViewer.style.fontFamily = "Helvetica, Arial, sans-serif";
-    readabilityViewer.style.background = "#ffffff";
-    readabilityViewer.style.color = "";
-    $("#readabilityOff").css("display","inline-block");
-    $("#themeStyle").show();
-    $("#readabilityFont").show();
-    $("#readabilityFontSize").show();
-    $("#readabilityOn").hide();
-    $("#changeStyleButton").hide();
-    $("#resetStyleButton").hide();
+    try {
+      $(readabilityViewer).html(article.content);
+      readabilityViewer.style.fontSize = fontSize;//"large";
+      readabilityViewer.style.fontFamily = "Helvetica, Arial, sans-serif";
+      readabilityViewer.style.background = "#ffffff";
+      readabilityViewer.style.color = "";
+      $("#readabilityOff").css("display", "inline-block");
+      $("#themeStyle").show();
+      $("#readabilityFont").show();
+      $("#readabilityFontSize").show();
+      $("#readabilityOn").hide();
+      $("#changeStyleButton").hide();
+      $("#resetStyleButton").hide();
+    } catch (e) {
+      console.log(e);
+    }
   });
 
   $("#readabilityOff").on('click', function() {
