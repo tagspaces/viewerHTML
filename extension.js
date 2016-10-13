@@ -15,6 +15,9 @@ define(function(require, exports, module) {
   var currentFilePath;
   var extensionDirectory = TSCORE.Config.getExtensionPath() + "/" + extensionID;
 
+  var sourceURL = "";
+  var scrappedOn = "";
+
   function init(filePath, containerElementID) {
     console.log("Initalization HTML Viewer...");
     containerElID = containerElementID;
@@ -32,13 +35,13 @@ define(function(require, exports, module) {
     }));
 
     TSCORE.IO.loadTextFilePromise(filePath).then(function(content) {
-              exports.setContent(content);
-            },
-            function(error) {
-              TSCORE.hideLoadingAnimation();
-              TSCORE.showAlertDialog("Loading " + filePath + " failed.");
-              console.error("Loading file " + filePath + " failed " + error);
-            });
+        exports.setContent(content);
+      },
+      function(error) {
+        TSCORE.hideLoadingAnimation();
+        TSCORE.showAlertDialog("Loading " + filePath + " failed.");
+        console.error("Loading file " + filePath + " failed " + error);
+      });
   }
 
   function setFileType(fileType) {
@@ -67,17 +70,33 @@ define(function(require, exports, module) {
       console.log("Error parsing the body of the HTML document. " + e);
       bodyContent = content;
     }
-
+    try {
+      var scrappedOnRegex = /data-scrappedon='([^']*)'/m; // jshint ignore:line
+      scrappedOn = content.match(scrappedOnRegex)[1];
+    } catch (e) {
+      console.log("Error parsing the meta from the HTML document. " + e);
+    }
+    try {
+      var sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
+      sourceURL = content.match(sourceURLRegex)[1];
+      console.log('Source URL :');
+      console.debug(sourceURL);
+      if(source.isEmpty || sourceURL === null || sourceURL === undefined || sourceURL === ''){
+        console.log("URL iS empty URL! ");
+      }
+    } catch (e) {
+      console.log("Error parsing the meta from the HTML document. " + e);
+    }
     // removing all scripts from the document
     var cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
 
     var contentWindow = document.getElementById("iframeViewer").contentWindow;
     if (typeof contentWindow.setContent === "function") {
-      contentWindow.setContent(cleanedBodyContent, fileDirectory);
+      contentWindow.setContent(cleanedBodyContent, fileDirectory, sourceURL, scrappedOn);
     } else {
       // TODO optimize setTimeout
       window.setTimeout(function() {
-        contentWindow.setContent(cleanedBodyContent, fileDirectory);
+        contentWindow.setContent(cleanedBodyContent, fileDirectory, sourceURL, scrappedOn);
       }, 500);
     }
   }
@@ -92,5 +111,4 @@ define(function(require, exports, module) {
   exports.setContent = setContent;
   exports.viewerMode = viewerMode;
   exports.setFileType = setFileType;
-
 });

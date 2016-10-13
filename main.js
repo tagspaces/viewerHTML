@@ -5,7 +5,6 @@
 "use strict";
 
 var $htmlContent;
-
 $(document).ready(function() {
 
   function getParameterByName(name) {
@@ -105,6 +104,11 @@ $(document).ready(function() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
 
+  $('#openSourceURL').on('click', function() {
+    var msg = {command: "openLinkExternally", link: srcURL};
+    window.parent.postMessage(JSON.stringify(msg), "*");
+  });
+
   // Menu: hide readability items
   $("#readabilityFont").hide();
   $("#readabilityFontSize").hide();
@@ -112,7 +116,8 @@ $(document).ready(function() {
   $("#readabilityOff").hide();
 });
 
-function setContent(content, fileDirectory) {
+var srcURL;
+function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   var isWeb;
   $htmlContent = $("#htmlContent");
   $htmlContent.append(content);
@@ -245,10 +250,23 @@ function setContent(content, fileDirectory) {
     readabilityViewer.style.background = "#f4ecd8";
   });
 
+  //if (sourceURL) {
+  //  $("#openSourceURL").show();
+  //} else {
+  //  $("#openSourceURL").hide();
+  //}
+
   function increaseFont() {
-    var style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
-    var fontSize = parseFloat(style);
-    readabilityViewer.style.fontSize = (fontSize + 1) + 'px';
+    try {
+      var style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
+      console.log(style);
+      console.debug(style);
+      var fontSize = parseFloat(style);
+      readabilityViewer.style.fontSize = (fontSize + 1) + 'px';
+    } catch (e) {
+      console.log('Error handling : ' + e);
+      console.assert(e);
+    }
   }
 
   function decreaseFont() {
