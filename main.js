@@ -111,7 +111,6 @@ $(document).ready(function() {
   $("#readabilityOff").hide();
 });
 
-var srcURL;
 function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   var isWeb;
   $htmlContent = $("#htmlContent");

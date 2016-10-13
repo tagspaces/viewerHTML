@@ -81,14 +81,6 @@ define(function(require, exports, module) {
     sourceURL = content.match(regex);
     var url = sourceURL ? sourceURL[1] : undefined;
 
-    //try {
-    //
-    //  console.log('Source URL :');
-    //  console.debug(sourceURL);
-    //
-    //} catch (e) {
-    //  console.log("Error parsing the meta from the HTML document. " + e);
-    //}
     // removing all scripts from the document
     var cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
 
