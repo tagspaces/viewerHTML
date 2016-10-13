@@ -182,6 +182,9 @@ function setContent(content, fileDirectory) {
       $("#readabilityOn").hide();
       $("#changeStyleButton").hide();
       $("#resetStyleButton").hide();
+      $("#zoomInButton").hide();
+      $("#zoomOutButton").hide();
+      $("#zoomResetButton").hide();
     } catch (e) {
       console.log("Error handling" + e);
     }
