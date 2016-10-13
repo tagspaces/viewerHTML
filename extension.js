@@ -70,33 +70,35 @@ define(function(require, exports, module) {
       console.log("Error parsing the body of the HTML document. " + e);
       bodyContent = content;
     }
-    try {
-      var scrappedOnRegex = /data-scrappedon='([^']*)'/m; // jshint ignore:line
-      scrappedOn = content.match(scrappedOnRegex)[1];
-    } catch (e) {
-      console.log("Error parsing the meta from the HTML document. " + e);
-    }
-    try {
-      var sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
-      sourceURL = content.match(sourceURLRegex)[1];
-      console.log('Source URL :');
-      console.debug(sourceURL);
-      if(source.isEmpty || sourceURL === null || sourceURL === undefined || sourceURL === ''){
-        console.log("URL iS empty URL! ");
-      }
-    } catch (e) {
-      console.log("Error parsing the meta from the HTML document. " + e);
-    }
+    //try {
+    //  var scrappedOnRegex = /data-scrappedon='([^']*)'/m; // jshint ignore:line
+    //  scrappedOn = content.match(scrappedOnRegex)[1];
+    //} catch (e) {
+    //  console.log("Error parsing the meta from the HTML document. " + e);
+    //}
+    var sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
+    var regex = new RegExp(sourceURLRegex);
+    sourceURL = content.match(regex);
+    var url = sourceURL ? sourceURL[1] : undefined;
+
+    //try {
+    //
+    //  console.log('Source URL :');
+    //  console.debug(sourceURL);
+    //
+    //} catch (e) {
+    //  console.log("Error parsing the meta from the HTML document. " + e);
+    //}
     // removing all scripts from the document
     var cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
 
     var contentWindow = document.getElementById("iframeViewer").contentWindow;
     if (typeof contentWindow.setContent === "function") {
-      contentWindow.setContent(cleanedBodyContent, fileDirectory, sourceURL, scrappedOn);
+      contentWindow.setContent(cleanedBodyContent, fileDirectory, url, scrappedOn);
     } else {
       // TODO optimize setTimeout
       window.setTimeout(function() {
-        contentWindow.setContent(cleanedBodyContent, fileDirectory, sourceURL, scrappedOn);
+        contentWindow.setContent(cleanedBodyContent, fileDirectory, url, scrappedOn);
       }, 500);
     }
   }

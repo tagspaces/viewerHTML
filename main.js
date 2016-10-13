@@ -104,11 +104,6 @@ $(document).ready(function() {
     extSettings = JSON.parse(localStorage.getItem("viewerHTMLSettings"));
   }
 
-  $('#openSourceURL').on('click', function() {
-    var msg = {command: "openLinkExternally", link: srcURL};
-    window.parent.postMessage(JSON.stringify(msg), "*");
-  });
-
   // Menu: hide readability items
   $("#readabilityFont").hide();
   $("#readabilityFontSize").hide();
@@ -250,11 +245,16 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     readabilityViewer.style.background = "#f4ecd8";
   });
 
-  //if (sourceURL) {
-  //  $("#openSourceURL").show();
-  //} else {
-  //  $("#openSourceURL").hide();
-  //}
+  if (sourceURL) {
+    $("#openSourceURL").show();
+  } else {
+    $("#openSourceURL").hide();
+  }
+
+  $('#openSourceURL').on('click', function() {
+    var msg = {command: "openLinkExternally", link: sourceURL};
+    window.parent.postMessage(JSON.stringify(msg), "*");
+  });
 
   function increaseFont() {
     try {
