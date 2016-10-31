@@ -186,6 +186,8 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
       $("#zoomResetButton").hide();
     } catch (e) {
       console.log("Error handling" + e);
+      var msg = {command: "readabilityError", link: e};
+      window.parent.postMessage(JSON.stringify(msg), "*");
     }
   });
 
