@@ -186,7 +186,11 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
       $("#zoomResetButton").hide();
     } catch (e) {
       console.log("Error handling" + e);
-      var msg = {command: "showAlertDialog", title: 'Readability Mode', message: e};
+      var msg = {
+        command: "showAlertDialog",
+        title: 'Readability Mode',
+        message: 'This content can not be loaded.'
+      };
       window.parent.postMessage(JSON.stringify(msg), "*");
     }
   });
