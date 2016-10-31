@@ -2,37 +2,37 @@
 @import '../../libs/extCommon/common.css';
 
 #htmlContent {
-  overflow: auto;
-  height: 100%;
-  font-size: 13px;
+    overflow: auto;
+    height: 100%;
+    font-size: 13px;
 }
 
 .zoomSmallest {
-    zoom:70%;
+    zoom: 70%;
 }
 
 .zoomSmaller {
-    zoom:80%;
+    zoom: 80%;
 }
 
 .zoomSmall {
-    zoom:90%;
+    zoom: 90%;
 }
 
 .zoomDefault {
-    zoom:100%;
+    zoom: 100%;
 }
 
 .zoomLarge {
-    zoom:110%;
+    zoom: 110%;
 }
 
 .zoomLarger {
-    zoom:120%;
+    zoom: 120%;
 }
 
 .zoomLargest {
-    zoom:130%;
+    zoom: 130%;
 }
 
 /* Readability */
@@ -42,21 +42,21 @@
 }
 
 #readabilityFont {
-    margin-left:19px;
-    margin-top:11px;
+    margin-left: 19px;
+    margin-top: 11px;
 }
 
-#sanSerifLabel{
+#sanSerifLabel {
     font-family: Helvetica, Arial, sans-serif
 }
 
-#serifLabel{
+#serifLabel {
     font-family: Georgia, Times New Roman, serif;
 }
 
 #readabilityFontSize {
-    margin-left:19px;
-    margin-top:11px;
+    margin-left: 19px;
+    margin-top: 11px;
 }
 
 .btn-black {

@@ -261,7 +261,14 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
       console.log(style);
       console.debug(style);
       var fontSize = parseFloat(style);
+      //if($('#readability-page-1').hasClass('page')){
+      var page = document.getElementsByClassName("markdown");
+      console.log(page[0].style);
+      page[0].style.fontSize = (fontSize + 1) + 'px';
+      page[0].style[11] = (fontSize + 1) + 'px';
+      //} else {
       readabilityViewer.style.fontSize = (fontSize + 1) + 'px';
+      //}
     } catch (e) {
       console.log('Error handling : ' + e);
       console.assert(e);
