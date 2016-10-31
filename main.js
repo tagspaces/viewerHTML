@@ -5,12 +5,12 @@
 "use strict";
 
 var $htmlContent;
-$(document).ready(function() {
 
+$(document).ready(function() {
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-      results = regex.exec(window.location.search);
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 
