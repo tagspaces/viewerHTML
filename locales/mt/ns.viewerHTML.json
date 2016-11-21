@@ -1,4 +1,7 @@
 {
+    "findInDocument": "Find in document",
+    "startSearch": "Start Search",
+    "cancelSearch": "Ikkanċella t-Tiftixa",
     "zoomOut": "Ersaq 'il Barra",
     "zoomIn": "Idħol 'il Ġewwa",
     "zoomReset": "Irrisettja ż-'Zoom'",
@@ -6,6 +9,14 @@
     "resetTheme": "Irrisettja t-Tema",
     "print": "Istampa",
     "about": "Dwar",
-    "aboutTitle": "Dwar l-estenzjoni ViewerHTML",
+    "aboutTitle": "About HTML Viewer",
+    "readabilityOn": "Open reader mode",
+    "readabilityOff": "Close reader mode",
+    "toSansSerifFont": "Apply sans serif font",
+    "toSerifFont": "Apply serif font",
+    "increasingFontSize": "Increase Font Size",
+    "decreasingFontSize": "Decrease Font Size",
+    "changeBackgroundColor": "Change Background Color",
+    "openSourceURL": "Open source URL",
     "-": "-"
 }

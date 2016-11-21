@@ -1,4 +1,7 @@
 {
+    "findInDocument": "Find in document",
+    "startSearch": "Start Search",
+    "cancelSearch": "Откажи търсенето",
     "zoomOut": "Отдалечаване",
     "zoomIn": "Приближаване",
     "zoomReset": "Възстановяване на приближаването",
@@ -6,6 +9,14 @@
     "resetTheme": "Възстановяване на темата",
     "print": "Принтирай",
     "about": "Относно",
-    "aboutTitle": "За ViewerHTML плъгина",
+    "aboutTitle": "About HTML Viewer",
+    "readabilityOn": "Open reader mode",
+    "readabilityOff": "Close reader mode",
+    "toSansSerifFont": "Apply sans serif font",
+    "toSerifFont": "Apply serif font",
+    "increasingFontSize": "Increase Font Size",
+    "decreasingFontSize": "Decrease Font Size",
+    "changeBackgroundColor": "Change Background Color",
+    "openSourceURL": "Open source URL",
     "-": "-"
 }

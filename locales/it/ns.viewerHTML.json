@@ -1,4 +1,7 @@
 {
+    "findInDocument": "Find in document",
+    "startSearch": "Start Search",
+    "cancelSearch": "Cancel Search",
     "zoomOut": "Zoom Indietro",
     "zoomIn": "Zoom Avanti",
     "zoomReset": "Ripristina lo Zoom",
@@ -6,6 +9,14 @@
     "resetTheme": "Ripristina Tema",
     "print": "Stampa",
     "about": "About",
-    "aboutTitle": "About estensione ViewerHTML",
+    "aboutTitle": "About HTML Viewer",
+    "readabilityOn": "Open reader mode",
+    "readabilityOff": "Close reader mode",
+    "toSansSerifFont": "Apply sans serif font",
+    "toSerifFont": "Apply serif font",
+    "increasingFontSize": "Increase Font Size",
+    "decreasingFontSize": "Decrease Font Size",
+    "changeBackgroundColor": "Change Background Color",
+    "openSourceURL": "Open source URL",
     "-": "-"
 }

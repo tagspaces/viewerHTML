@@ -1,4 +1,7 @@
 {
+    "findInDocument": "Keresés a dokumentumban",
+    "startSearch": "Keresés indítása",
+    "cancelSearch": "Keresés visszavonása",
     "zoomOut": "Kicsinyítés",
     "zoomIn": "Nagyítás",
     "zoomReset": "Nézet nagyításának visszaállítása",
@@ -6,6 +9,14 @@
     "resetTheme": "Kinézet visszaállítása",
     "print": "Nyomtatás",
     "about": "A programról",
-    "aboutTitle": "A ViewerHTML kiegészítőről",
+    "aboutTitle": "A HTML nézegetőről",
+    "readabilityOn": "Megnyitás olvasási módban",
+    "readabilityOff": "Olvasási mód bezárása",
+    "toSansSerifFont": "Sans serif betűtípus alkalmazása",
+    "toSerifFont": "Serif betűtípus alkalmazása",
+    "increasingFontSize": "Betűméret növelése",
+    "decreasingFontSize": "Betűméret csökkentése",
+    "changeBackgroundColor": "Háttérszín megváltoztatása",
+    "openSourceURL": "Forrás URL megnyitása",
     "-": "-"
 }
