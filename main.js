@@ -111,15 +111,8 @@ $(document).ready(function() {
   $("#readabilityOff").hide();
 });
 
-function setContent(content, fileDirectory, sourceURL, scrappedOn) {
-  var isWeb;
-  $htmlContent = $("#htmlContent");
-  $htmlContent.append(content);
-
-  if (fileDirectory.indexOf("file://") === 0) {
-    fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
-  }
-
+// fixing embedding of local images
+function fixingEmbeddingOfLocalImages($htmlContent) {
   var hasURLProtocol = function(url) {
     return (
       url.indexOf("http://") === 0 ||
@@ -129,37 +122,45 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     );
   };
 
-  // fixing embedding of local images
-  function fixingEmbeddingOfLocalImages() {
-    $htmlContent.find("img[src]").each(function() {
-      var currentSrc = $(this).attr("src");
-      if (!hasURLProtocol(currentSrc)) {
-        var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-        $(this).attr("src", path);
+  $htmlContent.find("img[src]").each(function() {
+    var currentSrc = $(this).attr("src");
+    if (!hasURLProtocol(currentSrc)) {
+      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
+      $(this).attr("src", path);
+    }
+  });
+
+  $htmlContent.find("a[href]").each(function() {
+    var currentSrc = $(this).attr("href");
+    var path;
+
+    if (!hasURLProtocol(currentSrc)) {
+      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
+      $(this).attr("href", path);
+    }
+
+    $(this).off();
+    $(this).on('click', function(e) {
+      e.preventDefault();
+      if (path) {
+        currentSrc = encodeURIComponent(path);
       }
+      var msg = {command: "openLinkExternally", link: currentSrc};
+      window.parent.postMessage(JSON.stringify(msg), "*");
     });
+  });
+}
 
-    $htmlContent.find("a[href]").each(function() {
-      var currentSrc = $(this).attr("href");
-      var path;
+function setContent(content, fileDirectory, sourceURL, scrappedOn) {
+  var isWeb;
+  $htmlContent = $("#htmlContent");
+  $htmlContent.append(content);
 
-      if (!hasURLProtocol(currentSrc)) {
-        var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-        $(this).attr("href", path);
-      }
-
-      $(this).bind('click', function(e) {
-        e.preventDefault();
-        if (path) {
-          currentSrc = encodeURIComponent(path);
-        }
-        var msg = {command: "openLinkExternally", link: currentSrc};
-        window.parent.postMessage(JSON.stringify(msg), "*");
-      });
-    });
+  if (fileDirectory.indexOf("file://") === 0) {
+    fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
   }
 
-  fixingEmbeddingOfLocalImages();
+  fixingEmbeddingOfLocalImages($htmlContent);
 
   // View readability mode
   var readabilityViewer = document.getElementById("htmlContent");
@@ -170,6 +171,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
       var documentClone = document.cloneNode(true);
       var article = new Readability(document.baseURI, documentClone).parse();
       $(readabilityViewer).html(article.content);
+      fixingEmbeddingOfLocalImages($(readabilityViewer));
       readabilityViewer.style.fontSize = fontSize;//"large";
       readabilityViewer.style.fontFamily = "Helvetica, Arial, sans-serif";
       readabilityViewer.style.background = "#ffffff";
@@ -196,8 +198,9 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   });
 
   $("#readabilityOff").on('click', function() {
-    $($htmlContent).empty();
-    $($htmlContent).append(content);
+    $htmlContent.empty();
+    $htmlContent.append(content);
+    fixingEmbeddingOfLocalImages($htmlContent);
     readabilityViewer.style.fontSize = '';//"large";
     readabilityViewer.style.fontFamily = "";
     readabilityViewer.style.color = "";
