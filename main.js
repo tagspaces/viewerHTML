@@ -5,6 +5,7 @@
 "use strict";
 
 var $htmlContent;
+var isWeb;
 
 $(document).ready(function() {
   function getParameterByName(name) {
@@ -17,6 +18,8 @@ $(document).ready(function() {
   var locale = getParameterByName("locale");
 
   var searchQuery = getParameterByName("query");
+
+  isWeb = parent.isWeb;
 
   var extSettings;
   loadExtSettings();
@@ -112,7 +115,7 @@ $(document).ready(function() {
 });
 
 // fixing embedding of local images
-function fixingEmbeddingOfLocalImages($htmlContent) {
+function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
   var hasURLProtocol = function(url) {
     return (
       url.indexOf("http://") === 0 ||
@@ -152,7 +155,6 @@ function fixingEmbeddingOfLocalImages($htmlContent) {
 }
 
 function setContent(content, fileDirectory, sourceURL, scrappedOn) {
-  var isWeb;
   $htmlContent = $("#htmlContent");
   $htmlContent.append(content);
 
@@ -160,7 +162,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
   }
 
-  fixingEmbeddingOfLocalImages($htmlContent);
+  fixingEmbeddingOfLocalImages($htmlContent, fileDirectory);
 
   // View readability mode
   var readabilityViewer = document.getElementById("htmlContent");
@@ -171,7 +173,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
       var documentClone = document.cloneNode(true);
       var article = new Readability(document.baseURI, documentClone).parse();
       $(readabilityViewer).html(article.content);
-      fixingEmbeddingOfLocalImages($(readabilityViewer));
+      fixingEmbeddingOfLocalImages($(readabilityViewer, fileDirectory));
       readabilityViewer.style.fontSize = fontSize;//"large";
       readabilityViewer.style.fontFamily = "Helvetica, Arial, sans-serif";
       readabilityViewer.style.background = "#ffffff";
@@ -200,7 +202,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   $("#readabilityOff").on('click', function() {
     $htmlContent.empty();
     $htmlContent.append(content);
-    fixingEmbeddingOfLocalImages($htmlContent);
+    fixingEmbeddingOfLocalImages($htmlContent, fileDirectory);
     readabilityViewer.style.fontSize = '';//"large";
     readabilityViewer.style.fontFamily = "";
     readabilityViewer.style.color = "";
@@ -212,7 +214,6 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     $("#readabilityFont").hide();
     $("#readabilityFontSize").hide();
     $("#themeStyle").hide();
-    fixingEmbeddingOfLocalImages();
   });
 
   $("#toSansSerifFont").on('click', function(e) {
