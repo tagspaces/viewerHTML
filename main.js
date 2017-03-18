@@ -1,13 +1,15 @@
-/* Copyright (c) 2013-2016 The TagSpaces Authors.
+/* Copyright (c) 2013-2017 The TagSpaces Authors.
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 
-/* globals marked, Readability, Mousetrap */
+/* globals Readability, Mousetrap */
 "use strict";
 
 var $htmlContent;
 var isWeb;
 
-$(document).ready(function() {
+$(document).ready(init);
+
+function init() {
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
@@ -112,7 +114,7 @@ $(document).ready(function() {
   $("#readabilityFontSize").hide();
   $("#themeStyle").hide();
   $("#readabilityOff").hide();
-});
+};
 
 // fixing embedding of local images
 function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
@@ -156,7 +158,7 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
 
 function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   $htmlContent = $("#htmlContent");
-  $htmlContent.append(content);
+  $htmlContent.empty().append(content);
 
   if (fileDirectory.indexOf("file://") === 0) {
     fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
