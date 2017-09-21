@@ -1,0 +1,16 @@
+{
+  "name": "@tagspaces/html-reader",
+  "version": "1.0.0",
+  "description": "A TagSpaces extension allowing opening of HTML files.",
+  "homepage": "https://www.tagspaces.org",
+  "main": "extension.js",
+  "author": {
+    "name": "TagSpaces UG",
+    "email": "info@tagspaces.org",
+    "url": "https://www.tagspaces.org"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.3.7"
+  }
+}
