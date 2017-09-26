@@ -17,8 +17,7 @@
     "jquery": "~2.2.4",
     "mousetrap": "~1.5.3",
     "readability":"https://github.com/mozilla/readability.git#master",
-    "extCommon": "https://github.com/tagspaces/extCommons.git#next",
-    "i18next": "^1.11.5"
+    "extCommon": "https://github.com/tagspaces/extCommons.git#next"
   }
 }
 
