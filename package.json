@@ -12,6 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "~3.3.7",
+    "bootswatch": "v3.3.7",
+    "fontawesome": "~4.7.0",
     "jquery": "~2.2.4",
     "mousetrap": "~1.5.3",
     "readability":"git+https://github.com/mozilla/readability.git#master",
