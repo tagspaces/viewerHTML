@@ -27,14 +27,16 @@ function init() {
   loadExtSettings();
 
   // Init internationalization
-  $.i18n.init({
-    ns: {namespaces: ['ns.viewerHTML']},
-    debug: true,
-    lng: locale,
-    fallbackLng: 'en_US'
-  }, function() {
-    $('[data-i18n]').i18n();
-  });
+  if($.i18n) {
+    $.i18n.init({
+      ns: {namespaces: ['ns.viewerHTML']},
+      debug: true,
+      lng: locale,
+      fallbackLng: 'en_US'
+    }, function() {
+      $('[data-i18n]').i18n();
+    });
+  }  
 
   $htmlContent = $("#htmlContent");
 
