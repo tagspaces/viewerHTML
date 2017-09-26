@@ -16,7 +16,8 @@
     "fontawesome": "~4.7.0",
     "jquery": "~2.2.4",
     "mousetrap": "~1.5.3",
-    "readability":"git+https://github.com/mozilla/readability.git#master",
+    "readability":"https://github.com/mozilla/readability.git#master",
+    "extCommon": "https://github.com/tagspaces/extCommons.git#next",
     "i18next": "~1.10.1"
   }
 }
