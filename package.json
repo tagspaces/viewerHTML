@@ -11,6 +11,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "~3.3.7"
+    "bootstrap": "~3.3.7",
+    "jquery": "~2.2.4",
+    "mousetrap": "~1.5.3",
+    "readability":"git+https://github.com/mozilla/readability.git#master",
+    "i18next": "~1.10.1"
   }
 }
