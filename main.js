@@ -27,16 +27,15 @@ function init() {
   loadExtSettings();
 
   // Init internationalization
-  if($.i18n) {
-    $.i18n.init({
-      ns: {namespaces: ['ns.viewerHTML']},
-      debug: true,
-      lng: locale,
-      fallbackLng: 'en_US'
-    }, function() {
-      $('[data-i18n]').i18n();
-    });
-  }  
+  i18next.init({
+    ns: {namespaces: ['ns.viewerHTML']},
+    debug: true,
+    lng: locale,
+    fallbackLng: 'en_US'
+  }, function() {
+    jqueryI18next.init(i18next, $);
+    $('[data-i18n]').localize();
+  });
 
   $htmlContent = $("#htmlContent");
 
