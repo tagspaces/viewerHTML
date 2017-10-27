@@ -7,9 +7,15 @@
 var $htmlContent;
 var isWeb;
 
+var loadContentExternally = true;
+
 $(document).ready(init);
 
 function init() {
+
+  var msg = {command: "loadTextFile" , filepath: '/home/na/mnt.sh'};
+  window.parent.postMessage(JSON.stringify(msg) , "*");  
+
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
@@ -162,10 +168,36 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
 }
 
 function setContent(content, fileDirectory, sourceURL, scrappedOn) {
-  $htmlContent = $("#htmlContent");
-  $htmlContent.empty().append(content);
+  // console.log(content);
 
-  if (fileDirectory.indexOf("file://") === 0) {
+  var bodyRegex = /\<body[^>]*\>([^]*)\<\/body/m; // jshint ignore:line
+  var bodyContent;
+
+  try {
+    bodyContent = content.match(bodyRegex)[1];
+  } catch (e) {
+    console.log("Error parsing the body of the HTML document. " + e);
+    bodyContent = content;
+  }
+  //try {
+  //  var scrappedOnRegex = /data-scrappedon='([^']*)'/m; // jshint ignore:line
+  //  scrappedOn = content.match(scrappedOnRegex)[1];
+  //} catch (e) {
+  //  console.log("Error parsing the meta from the HTML document. " + e);
+  //}
+  var sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
+  var regex = new RegExp(sourceURLRegex);
+  sourceURL = content.match(regex);
+  var url = sourceURL ? sourceURL[1] : undefined;
+
+  // removing all scripts from the document
+  var cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+
+
+  $htmlContent = $("#htmlContent");
+  $htmlContent.empty().append(cleanedBodyContent);
+
+  if (fileDirectory && fileDirectory.startsWith("file://")) {
     fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
   }
 
@@ -208,7 +240,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
 
   $("#readabilityOff").on('click', function() {
     $htmlContent.empty();
-    $htmlContent.append(content);
+    $htmlContent.append(cleanedBodyContent);
     fixingEmbeddingOfLocalImages($htmlContent, fileDirectory);
     readabilityViewer.style.fontSize = '';//"large";
     readabilityViewer.style.fontFamily = "";
