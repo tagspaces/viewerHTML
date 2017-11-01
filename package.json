@@ -1,5 +1,5 @@
 {
-  "name": "@tagspaces/html-reader",
+  "name": "@tagspaces/html-viewer",
   "version": "1.0.0",
   "description": "A TagSpaces extension allowing opening of HTML files.",
   "homepage": "https://www.tagspaces.org",
