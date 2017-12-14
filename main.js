@@ -1,20 +1,15 @@
-/* Copyright (c) 2013-2017 The TagSpaces Authors.
+/* Copyright (c) 2013-present The TagSpaces Authors.
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 
-/* globals Readability, Mousetrap */
 "use strict";
 
 var $htmlContent;
-var isWeb;
-
 var loadContentExternally = true;
+var isWeb = (document.URL.startsWith('http') && !document.URL.startsWith('http://localhost:1212/'));
 
 $(document).ready(init);
 
 function init() {
-
-  var msg = {command: "loadTextFile" , filepath: '/home/na/mnt.sh'};
-  window.parent.postMessage(JSON.stringify(msg) , "*");  
 
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -26,8 +21,6 @@ function init() {
   var locale = getParameterByName("locale");
 
   var searchQuery = getParameterByName("query");
-
-  isWeb = parent.isWeb;
 
   var extSettings;
   loadExtSettings();
