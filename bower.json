@@ -4,10 +4,7 @@
   "description": "A TagSpaces extension allowing opening of HTML files.",
   "type": "viewer",
   "version": "1.0.0",
-  "dependencies": {
-    "readability": "https://github.com/mozilla/readability.git#master",
-    "dompurify": "~1.0.3"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "authors": [
     "TagSpaces Authors - http://tagspaces.org",
