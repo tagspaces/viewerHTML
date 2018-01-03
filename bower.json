@@ -5,7 +5,8 @@
   "type": "viewer",
   "version": "1.0.0",
   "dependencies": {
-
+    "readability": "https://github.com/mozilla/readability.git#master",
+    "dompurify": "~1.0.3"
   },
   "devDependencies": {},
   "authors": [
