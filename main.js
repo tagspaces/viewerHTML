@@ -3,14 +3,13 @@
 
 "use strict";
 
+sendMessageToHost({ command: 'loadDefaultTextContent' });
+
 var $htmlContent;
 var isWeb = (document.URL.startsWith('http') && !document.URL.startsWith('http://localhost:1212/'));
 
 $(document).ready(init);
-
 function init() {
-  sendMessageToHost({ command: 'loadDefaultTextContent' });
-
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
