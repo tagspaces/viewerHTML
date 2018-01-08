@@ -225,7 +225,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
         title: 'Readability Mode',
         message: 'This content can not be loaded.'
       };
-      window.parent.postMessage(JSON.stringify(msg), "*");
+      sendMessageToHost(msg);
     }
   });
 
@@ -291,8 +291,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   }
 
   $('#openSourceURL').on('click', function() {
-    var msg = {command: "openLinkExternally", link: sourceURL};
-    window.parent.postMessage(JSON.stringify(msg), "*");
+    sendMessageToHost({command: 'openLinkExternally', link: sourceURL});
   });
 
   function increaseFont() {
