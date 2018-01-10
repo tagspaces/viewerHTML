@@ -10,13 +10,6 @@ var isWeb = (document.URL.startsWith('http') && !document.URL.startsWith('http:/
 
 $(document).ready(init);
 function init() {
-  function getParameterByName(name) {
-    name = name.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    var results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  }
-
   var locale = getParameterByName('locale');
   initI18N(locale, 'ns.viewerHTML.json');
 
