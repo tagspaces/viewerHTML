@@ -9,11 +9,11 @@
   <script type="text/javascript" src="../legacy-ext/libs/jquery-i18next/jquery-i18next.min.js"></script>
   <script type="text/javascript" src="../legacy-ext/libs/marked/marked.min.js"></script>
   <script type="text/javascript" src="../legacy-ext/libs/mousetrap/mousetrap.min.js"></script>
-  <script type="text/javascript" src="libs/jquery.highlight.js"></script>
   <script type="text/javascript" src="../legacy-ext/common.js"></script>
-  <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="../legacy-ext/libs/readability/Readability.js"></script>
   <script type="text/javascript" src="../legacy-ext/libs/readability/JSDOMParser.js"></script>
+  <script type="text/javascript" src="libs/jquery.highlight.js"></script>
+  <script type="text/javascript" src="main.js"></script>
   <link rel="stylesheet" href="extension.css"/>
   <link rel="stylesheet" href="libs/markdown-css/markdown.css"/>
   <link rel="stylesheet" href="libs/markdown-css/github.css"/>
@@ -25,12 +25,12 @@
 <body>
 <div id="searchToolbar" style="display: none;">
   <div class="flexLayout">
-    <button class="btn btn-link" id="clearSearchExtButton" data-i18n="[title]ns.viewerHTML:cancelSearch">
+    <button class="btn btn-link" id="clearSearchExtButton" data-i18n="[title]cancelSearch">
       <i class="fa fa-lg fa-eraser"></i>
     </button>
-    <input class="flexMaxWidth" id="searchBox" type="text" data-i18n="[placeholder]ns.viewerHTML:findInDocument">
+    <input class="flexMaxWidth" id="searchBox" type="text" data-i18n="[placeholder]findInDocument">
     </button>
-    <button class="btn btn-link" id="searchExtButton" data-i18n="[title]ns.viewerHTML:startSearch">
+    <button class="btn btn-link" id="searchExtButton" data-i18n="[title]startSearch">
       <i class="fa fa-lg fa-binoculars"></i>
     </button>
   </div>
@@ -46,21 +46,21 @@
     </li>
     <li class="divider"></li>
     <li><a id="readabilityOn">
-      <i class="fa fa-book fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:readabilityOn"></span>
+      <i class="fa fa-book fa-lg fa-fw"></i>&nbsp;<span data-i18n="readabilityOn"></span>
     </a></li>
     <li><a id="readabilityOff">
-      <i class="fa fa-book fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:readabilityOff"></span>
+      <i class="fa fa-book fa-lg fa-fw"></i>&nbsp;<span data-i18n="readabilityOff"></span>
     </a></li>
     <li><a id="findInFile">
-      <i class="fa fa-binoculars fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:findInDocument"></span>
+      <i class="fa fa-binoculars fa-lg fa-fw"></i>&nbsp;<span data-i18n="findInDocument"></span>
     </a></li>
     <li class="divider"></li>
     <li>
       <div id="readabilityFont">
         <i class="fa fa-font fa-lg fa-fw"></i>&nbsp;
         <div class="btn-group" data-toggle="buttons">
-          <a id="toSansSerifFont"><label id="sanSerifLabel" class="btn btn-secondary" data-i18n="[title]ns.viewerHTML:toSansSerifFont">AB</label></a>
-          <a id="toSerifFont"><label id="serifLabel" class="btn btn-secondary" data-i18n="[title]ns.viewerHTML:toSerifFont">AB</label></a>
+          <a id="toSansSerifFont"><label id="sanSerifLabel" class="btn btn-secondary" data-i18n="[title]toSansSerifFont">AB</label></a>
+          <a id="toSerifFont"><label id="serifLabel" class="btn btn-secondary" data-i18n="[title]toSerifFont">AB</label></a>
         </div>
       </div>
     </li>
@@ -68,8 +68,8 @@
       <div id="readabilityFontSize">
         <i class="fa fa-text-height fa-lg fa-fw"></i>&nbsp;
         <div class="btn-group" data-toggle="buttons">
-          <a id="decreasingFontSize"><label class="btn btn-secondary" data-i18n="[title]ns.viewerHTML:decreasingFontSize">-</label></a>
-          <a id="increasingFontSize"><label class="btn btn-secondary" data-i18n="[title]ns.viewerHTML:increasingFontSize">+</label></a>
+          <a id="decreasingFontSize"><label class="btn btn-secondary" data-i18n="[title]decreasingFontSize">-</label></a>
+          <a id="increasingFontSize"><label class="btn btn-secondary" data-i18n="[title]increasingFontSize">+</label></a>
         </div>
       </div>
     </li>
@@ -77,36 +77,36 @@
       <div id="themeStyle" style="margin-left: 19px; margin-top: 10px;">
         <i class="fa fa-paint-brush fa-lg fa-fw"></i>&nbsp;
         <div class="btn-group" data-toggle="buttons">
-          <a id="whiteBackgroundColor"><label class="btn btn-secondary" data-i18n="[title]ns.viewerHTML:changeBackgroundColor">&nbsp;</label></a>
-          <a id="blackBackgroundColor"><label class="btn btn-black" data-i18n="[title]ns.viewerHTML:changeBackgroundColor">&nbsp;</label></a>
-          <a id="sepiaBackgroundColor"><label class="btn btn-sepia" data-i18n="[title]ns.viewerHTML:changeBackgroundColor">&nbsp;</label></a>
+          <a id="whiteBackgroundColor"><label class="btn btn-secondary" data-i18n="[title]changeBackgroundColor">&nbsp;</label></a>
+          <a id="blackBackgroundColor"><label class="btn btn-black" data-i18n="[title]changeBackgroundColor">&nbsp;</label></a>
+          <a id="sepiaBackgroundColor"><label class="btn btn-sepia" data-i18n="[title]changeBackgroundColor">&nbsp;</label></a>
         </div>
       </div>
     </li>
     <li><a id="changeStyleButton">
-      <i class="fa fa-adjust fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:changeTheme"></span>
+      <i class="fa fa-adjust fa-lg fa-fw"></i>&nbsp;<span data-i18n="changeTheme"></span>
     </a></li>
     <li><a id="resetStyleButton">
-      <i class="fa fa-circle-o fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:resetTheme"></span>
+      <i class="fa fa-circle-o fa-lg fa-fw"></i>&nbsp;<span data-i18n="resetTheme"></span>
     </a></li>
     <li><a id="zoomOutButton">
-      <i class="fa fa-search-minus fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:zoomOut"></span>
+      <i class="fa fa-search-minus fa-lg fa-fw"></i>&nbsp;<span data-i18n="zoomOut"></span>
     </a></li>
     <li><a id="zoomInButton">
-      <i class="fa fa-search-plus fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:zoomIn"></span>
+      <i class="fa fa-search-plus fa-lg fa-fw"></i>&nbsp;<span data-i18n="zoomIn"></span>
     </a></li>
     <li><a id="zoomResetButton">
-      <i class="fa fa-search fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:zoomReset"></span>
+      <i class="fa fa-search fa-lg fa-fw"></i>&nbsp;<span data-i18n="zoomReset"></span>
     </a></li>
     <li><a id="openSourceURL">
-      <i class="fa fa-external-link-square fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:openSourceURL"></span>
+      <i class="fa fa-external-link-square fa-fw"></i>&nbsp;<span data-i18n="openSourceURL"></span>
     </a></li>
     <li class="divider"></li>
     <li><a id="printButton">
-      <i class="fa fa-print fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:print"></span>
+      <i class="fa fa-print fa-lg fa-fw"></i>&nbsp;<span data-i18n="print"></span>
     </a></li>
     <li><a id="aboutButton">
-      <i class="fa fa-comment fa-lg fa-fw"></i>&nbsp;<span data-i18n="ns.viewerHTML:about"></span>
+      <i class="fa fa-comment fa-lg fa-fw"></i>&nbsp;<span data-i18n="about"></span>
     </a></li>
   </ul>
 </div>
@@ -115,7 +115,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" id="closeAboutDialogButton" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h4 class="modal-title" data-i18n="ns.viewerHTML:aboutTitle"></h4>
+        <h4 class="modal-title" data-i18n="aboutTitle"></h4>
       </div>
       <div class="modal-body"></div>
       <div class="modal-footer">
