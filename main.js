@@ -5,28 +5,28 @@
 
 sendMessageToHost({ command: 'loadDefaultTextContent' });
 
-var $htmlContent;
+let $htmlContent;
 
 $(document).ready(init);
 function init() {
-  var locale = getParameterByName('locale');
+  const locale = getParameterByName('locale');
   initI18N(locale, 'ns.viewerHTML.json');
 
-  var searchQuery = getParameterByName('query');
+  const searchQuery = getParameterByName('query');
 
-  var extSettings;
+  let extSettings;
   loadExtSettings();
 
   $htmlContent = $('#htmlContent');
 
-  var styles = ['', 'solarized-dark', 'github', 'metro-vibes', 'clearness', 'clearness-dark'];
-  var currentStyleIndex = 0;
+  const styles = ['', 'solarized-dark', 'github', 'metro-vibes', 'clearness', 'clearness-dark'];
+  let currentStyleIndex = 0;
   if (extSettings && extSettings.styleIndex) {
     currentStyleIndex = extSettings.styleIndex;
   }
 
-  var zoomSteps = ['zoomSmallest', 'zoomSmaller', 'zoomSmall', 'zoomDefault', 'zoomLarge', 'zoomLarger', 'zoomLargest'];
-  var currentZoomState = 3;
+  const zoomSteps = ['zoomSmallest', 'zoomSmaller', 'zoomSmall', 'zoomDefault', 'zoomLarge', 'zoomLarger', 'zoomLargest'];
+  let currentZoomState = 3;
   if (extSettings && extSettings.zoomState) {
     currentZoomState = extSettings.zoomState;
   }
@@ -34,7 +34,7 @@ function init() {
   $htmlContent.removeClass();
   $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
 
-  $('#changeStyleButton').on('click', function() {
+  $('#changeStyleButton').on('click', () => {
     currentStyleIndex = currentStyleIndex + 1;
     if (currentStyleIndex >= styles.length) {
       currentStyleIndex = 0;
@@ -44,14 +44,14 @@ function init() {
     saveExtSettings();
   });
 
-  $('#resetStyleButton').on('click', function() {
+  $('#resetStyleButton').on('click', () => {
     currentStyleIndex = 0;
     $htmlContent.removeClass();
     $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
     saveExtSettings();
   });
 
-  $('#zoomInButton').on('click', function() {
+  $('#zoomInButton').on('click', () => {
     currentZoomState++;
     if (currentZoomState >= zoomSteps.length) {
       currentZoomState = 6;
@@ -61,7 +61,7 @@ function init() {
     saveExtSettings();
   });
 
-  $('#zoomOutButton').on('click', function() {
+  $('#zoomOutButton').on('click', () => {
     currentZoomState--;
     if (currentZoomState < 0) {
       currentZoomState = 0;
@@ -71,7 +71,7 @@ function init() {
     saveExtSettings();
   });
 
-  $('#zoomResetButton').on('click', function() {
+  $('#zoomResetButton').on('click', () => {
     currentZoomState = 3;
     $htmlContent.removeClass();
     $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
@@ -79,7 +79,7 @@ function init() {
   });
 
   function saveExtSettings() {
-    var settings = {
+    const settings = {
       'styleIndex': currentStyleIndex,
       'zoomState': currentZoomState
     };
@@ -99,7 +99,7 @@ function init() {
 
 // fixing embedding of local images
 function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
-  var hasURLProtocol = function(url) {
+  const hasURLProtocol = (url) => {
     return (
       url.indexOf('http://') === 0 ||
       url.indexOf('https://') === 0 ||
@@ -108,28 +108,28 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
     );
   };
 
-  $htmlContent.find('img[src]').each(function() {
-    var currentSrc = $(this).attr('src');
+  $htmlContent.find('img[src]').each(() => {
+    const currentSrc = $(this).attr('src');
     if (!hasURLProtocol(currentSrc)) {
-      var path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
+      const path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
       $(this).attr('src', path);
     }
   });
 
-  $htmlContent.find('a[href]').each(function() {
-    var currentSrc = $(this).attr('href');
-    var path;
+  $htmlContent.find('a[href]').each(() => {
+    let currentSrc = $(this).attr('href');
+    let path;
 
     if(currentSrc.indexOf('#') === 0 ) {
       // Leave the default link behaviour by internal links
     } else {
       if (!hasURLProtocol(currentSrc)) {
-        var path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
+        const path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
         $(this).attr('href', path);
       }
 
       $(this).off();
-      $(this).on('click', function(e) {
+      $(this).on('click', (e) => {
         e.preventDefault();
         if (path) {
           currentSrc = encodeURIComponent(path);
@@ -143,8 +143,8 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
 function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   // console.log(content);
 
-  var bodyRegex = /\<body[^>]*\>([^]*)\<\/body/m; // jshint ignore:line
-  var bodyContent;
+  const bodyRegex = /\<body[^>]*\>([^]*)\<\/body/m; // jshint ignore:line
+  let bodyContent;
 
   try {
     bodyContent = content.match(bodyRegex)[1];
@@ -153,18 +153,18 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     bodyContent = content;
   }
   //try {
-  //  var scrappedOnRegex = /data-scrappedon='([^']*)'/m; // jshint ignore:line
+  //  const scrappedOnRegex = /data-scrappedon='([^']*)'/m; // jshint ignore:line
   //  scrappedOn = content.match(scrappedOnRegex)[1];
   //} catch (e) {
   //  console.log('Error parsing the meta from the HTML document. ' + e);
   //}
-  var sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
-  var regex = new RegExp(sourceURLRegex);
+  const sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
+  const regex = new RegExp(sourceURLRegex);
   sourceURL = content.match(regex);
-  var url = sourceURL ? sourceURL[1] : undefined;
+  const url = sourceURL ? sourceURL[1] : undefined;
 
   // removing all scripts from the document
-  var cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  const cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 
 
   $htmlContent = $('#htmlContent');
@@ -177,13 +177,13 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   fixingEmbeddingOfLocalImages($htmlContent, fileDirectory);
 
   // View readability mode
-  var readabilityViewer = document.getElementById('htmlContent');
-  var fontSize = 14;
+  const readabilityViewer = document.getElementById('htmlContent');
+  const fontSize = 14;
 
-  $('#readabilityOn').on('click', function() {
+  $('#readabilityOn').on('click', () => {
     try {
-      var documentClone = document.cloneNode(true);
-      var article = new Readability(document.baseURI, documentClone).parse();
+      const documentClone = document.cloneNode(true);
+      const article = new Readability(document.baseURI, documentClone).parse();
       $(readabilityViewer).html(article.content);
       fixingEmbeddingOfLocalImages($(readabilityViewer, fileDirectory));
       readabilityViewer.style.fontSize = fontSize;//'large';
@@ -202,7 +202,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
       $('#zoomResetButton').hide();
     } catch (e) {
       console.log('Error handling' + e);
-      var msg = {
+      const msg = {
         command: 'showAlertDialog',
         title: 'Readability Mode',
         message: 'This content can not be loaded.'
@@ -211,7 +211,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     }
   });
 
-  $('#readabilityOff').on('click', function() {
+  $('#readabilityOff').on('click', () => {
     $htmlContent.empty();
     $htmlContent.append(cleanedBodyContent);
     fixingEmbeddingOfLocalImages($htmlContent, fileDirectory);
@@ -228,39 +228,39 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     $('#themeStyle').hide();
   });
 
-  $('#toSansSerifFont').on('click', function(e) {
+  $('#toSansSerifFont').on('click', (e) => {
     e.stopPropagation();
     readabilityViewer.style.fontFamily = 'Helvetica, Arial, sans-serif';
   });
 
-  $('#toSerifFont').on('click', function(e) {
+  $('#toSerifFont').on('click', (e) => {
     e.stopPropagation();
     readabilityViewer.style.fontFamily = 'Georgia, Times New Roman, serif';
   });
 
-  $('#increasingFontSize').on('click', function(e) {
+  $('#increasingFontSize').on('click', (e) => {
     e.stopPropagation();
     increaseFont();
   });
 
-  $('#decreasingFontSize').on('click', function(e) {
+  $('#decreasingFontSize').on('click', (e) => {
     e.stopPropagation();
     decreaseFont();
   });
 
-  $('#whiteBackgroundColor').on('click', function(e) {
+  $('#whiteBackgroundColor').on('click', (e) => {
     e.stopPropagation();
     readabilityViewer.style.background = '#ffffff';
     readabilityViewer.style.color = '';
   });
 
-  $('#blackBackgroundColor').on('click', function(e) {
+  $('#blackBackgroundColor').on('click', (e) => {
     e.stopPropagation();
     readabilityViewer.style.background = '#282a36';
     readabilityViewer.style.color = '#ffffff';
   });
 
-  $('#sepiaBackgroundColor').on('click', function(e) {
+  $('#sepiaBackgroundColor').on('click', (e) => {
     e.stopPropagation();
     readabilityViewer.style.color = '#5b4636';
     readabilityViewer.style.background = '#f4ecd8';
@@ -272,18 +272,18 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     $('#openSourceURL').hide();
   }
 
-  $('#openSourceURL').on('click', function() {
+  $('#openSourceURL').on('click', () => {
     sendMessageToHost({command: 'openLinkExternally', link: sourceURL});
   });
 
   function increaseFont() {
     try {
-      var style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
+      const style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
       console.log(style);
       console.debug(style);
-      var fontSize = parseFloat(style);
+      const fontSize = parseFloat(style);
       //if($('#readability-page-1').hasClass('page')){
-      var page = document.getElementsByClassName('markdown');
+      const page = document.getElementsByClassName('markdown');
       console.log(page[0].style);
       page[0].style.fontSize = (fontSize + 1) + 'px';
       page[0].style[11] = (fontSize + 1) + 'px';
@@ -297,17 +297,17 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   }
 
   function decreaseFont() {
-    var style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
-    var fontSize = parseFloat(style);
+    const style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
+    const fontSize = parseFloat(style);
     readabilityViewer.style.fontSize = (fontSize - 1) + 'px';
   }
 
-  Mousetrap.bind(['command++', 'ctrl++'], function(e) {
+  Mousetrap.bind(['command++', 'ctrl++'], () => {
     increaseFont();
     return false;
   });
 
-  Mousetrap.bind(['command+-', 'ctrl+-'], function(e) {
+  Mousetrap.bind(['command+-', 'ctrl+-'], () => {
     decreaseFont();
     return false;
   });
