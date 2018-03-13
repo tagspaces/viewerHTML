@@ -1,6 +1,6 @@
 /* Copyright (c) 2013-present The TagSpaces Authors.
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
-
+/* globals marked, initI18N, getParameterByName, $, sendMessageToHost, isWeb */
 'use strict';
 
 sendMessageToHost({ command: 'loadDefaultTextContent' });
@@ -52,7 +52,7 @@ function init() {
   });
 
   $('#zoomInButton').on('click', () => {
-    currentZoomState++;
+    currentZoomState += 1;
     if (currentZoomState >= zoomSteps.length) {
       currentZoomState = 6;
     }
@@ -62,7 +62,7 @@ function init() {
   });
 
   $('#zoomOutButton').on('click', () => {
-    currentZoomState--;
+    currentZoomState -= 1;
     if (currentZoomState < 0) {
       currentZoomState = 0;
     }
@@ -95,7 +95,7 @@ function init() {
   $('#readabilityFontSize').hide();
   $('#themeStyle').hide();
   $('#readabilityOff').hide();
-};
+}
 
 // fixing embedding of local images
 function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
@@ -108,16 +108,16 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
     );
   };
 
-  $htmlContent.find('img[src]').each(() => {
-    const currentSrc = $(this).attr('src');
+  $htmlContent.find('img[src]').each((index, link) => {
+    const currentSrc = $(link).attr('src');
     if (!hasURLProtocol(currentSrc)) {
       const path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
-      $(this).attr('src', path);
+      $(link).attr('src', path);
     }
   });
 
-  $htmlContent.find('a[href]').each(() => {
-    let currentSrc = $(this).attr('href');
+  $htmlContent.find('a[href]').each((index, link) => {
+    let currentSrc = $(link).attr('href');
     let path;
 
     if(currentSrc.indexOf('#') === 0 ) {
@@ -125,11 +125,11 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
     } else {
       if (!hasURLProtocol(currentSrc)) {
         const path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
-        $(this).attr('href', path);
+        $(link).attr('href', path);
       }
 
-      $(this).off();
-      $(this).on('click', (e) => {
+      $(link).off();
+      $(link).on('click', (e) => {
         e.preventDefault();
         if (path) {
           currentSrc = encodeURIComponent(path);
@@ -141,8 +141,6 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
 }
 
 function setContent(content, fileDirectory, sourceURL, scrappedOn) {
-  // console.log(content);
-
   const bodyRegex = /\<body[^>]*\>([^]*)\<\/body/m; // jshint ignore:line
   let bodyContent;
 
@@ -152,12 +150,14 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     console.log('Error parsing the body of the HTML document. ' + e);
     bodyContent = content;
   }
-  //try {
+
+  // try {
   //  const scrappedOnRegex = /data-scrappedon='([^']*)'/m; // jshint ignore:line
   //  scrappedOn = content.match(scrappedOnRegex)[1];
-  //} catch (e) {
+  // } catch (e) {
   //  console.log('Error parsing the meta from the HTML document. ' + e);
-  //}
+  // }
+
   const sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
   const regex = new RegExp(sourceURLRegex);
   sourceURL = content.match(regex);
@@ -166,12 +166,14 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   // removing all scripts from the document
   const cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 
-
   $htmlContent = $('#htmlContent');
   $htmlContent.empty().append(cleanedBodyContent);
 
-  if (fileDirectory && fileDirectory.startsWith('file://')) {
-    fileDirectory = fileDirectory.substring(('file://').length, fileDirectory.length);
+  if (fileDirectory.indexOf('file://') === 0) {
+    fileDirectory = fileDirectory.substring(
+      'file://'.length,
+      fileDirectory.length
+    );
   }
 
   fixingEmbeddingOfLocalImages($htmlContent, fileDirectory);
@@ -284,7 +286,7 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
       const fontSize = parseFloat(style);
       //if($('#readability-page-1').hasClass('page')){
       const page = document.getElementsByClassName('markdown');
-      console.log(page[0].style);
+      // console.log(page[0].style);
       page[0].style.fontSize = (fontSize + 1) + 'px';
       page[0].style[11] = (fontSize + 1) + 'px';
       //} else {
