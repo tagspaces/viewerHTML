@@ -120,11 +120,11 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
     let currentSrc = $(link).attr('href');
     let path;
 
-    if(currentSrc.indexOf('#') === 0 ) {
+    if (currentSrc.indexOf('#') === 0) {
       // Leave the default link behaviour by internal links
     } else {
       if (!hasURLProtocol(currentSrc)) {
-        const path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
+        path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
         $(link).attr('href', path);
       }
 
@@ -134,7 +134,7 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
         if (path) {
           currentSrc = encodeURIComponent(path);
         }
-        sendMessageToHost({command: 'openLinkExternally', link: currentSrc});
+        sendMessageToHost({ command: 'openLinkExternally', link: currentSrc });
       });
     }
   });
