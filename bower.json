@@ -4,9 +4,7 @@
   "description": "A TagSpaces extension allowing opening of HTML files.",
   "type": "viewer",
   "version": "1.0.0",
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {},
   "authors": [
     "TagSpaces Authors - http://tagspaces.org",
@@ -18,7 +16,7 @@
   ],
   "license": "MIT",
   "main": [
-    "extension.js"
+    "main.js"
   ],
   "ignore": [
     "Gruntfile.js"
