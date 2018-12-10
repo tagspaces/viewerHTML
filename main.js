@@ -1,13 +1,17 @@
 /* Copyright (c) 2013-present The TagSpaces Authors.
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 /* globals marked, initI18N, getParameterByName, $, sendMessageToHost, isWeb */
-'use strict';
 
 sendMessageToHost({ command: 'loadDefaultTextContent' });
 
 let $htmlContent;
 
 $(document).ready(init);
+
+$(document).dblclick(() => {
+  sendMessageToHost({ command: 'editDocument' });
+});
+
 function init() {
   const locale = getParameterByName('locale');
   initI18N(locale, 'ns.viewerHTML.json');
