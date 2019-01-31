@@ -5,6 +5,7 @@
 sendMessageToHost({ command: 'loadDefaultTextContent' });
 
 let $htmlContent;
+let sourceURL;
 
 $(document).ready(init);
 
@@ -125,7 +126,7 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
     let path;
 
     if (currentSrc.indexOf('#') === 0) {
-      // Leave the default link behaviour by internal links
+      // Leave the default link behavior by internal links
     } else {
       if (!hasURLProtocol(currentSrc)) {
         path = (isWeb ? '' : 'file://') + fileDirectory + '/' + currentSrc;
@@ -144,7 +145,7 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
   });
 }
 
-function setContent(content, fileDirectory, sourceURL, scrappedOn) {
+function setContent(content, fileDirectory) {
   const bodyRegex = /\<body[^>]*\>([^]*)\<\/body/m; // jshint ignore:line
   let bodyContent;
 
@@ -162,10 +163,10 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
   //  console.log('Error parsing the meta from the HTML document. ' + e);
   // }
 
-  const sourceURLRegex = /data-sourceurl='([^']*)'/m; // jshint ignore:line
+  const sourceURLRegex = /data-sourceurl="([^"]*)"/m;
   const regex = new RegExp(sourceURLRegex);
-  sourceURL = content.match(regex);
-  const url = sourceURL ? sourceURL[1] : undefined;
+  const regexMatcher = content.match(regex);
+  sourceURL = regexMatcher ? regexMatcher[1] : undefined;
 
   // removing all scripts from the document
   const cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
@@ -272,14 +273,17 @@ function setContent(content, fileDirectory, sourceURL, scrappedOn) {
     readabilityViewer.style.background = '#f4ecd8';
   });
 
-  if (sourceURL) {
-    $('#openSourceURL').show();
-  } else {
-    $('#openSourceURL').hide();
-  }
-
   $('#openSourceURL').on('click', () => {
-    sendMessageToHost({command: 'openLinkExternally', link: sourceURL});
+    if (sourceURL && sourceURL.length > 0) {
+      sendMessageToHost({ command: 'openLinkExternally', link: sourceURL });
+    } else {
+      sendMessageToHost({
+        command: 'showAlertDialog',
+        title: 'Error',
+        message: 'No source URL found in this file!'
+      });
+    }
+
   });
 
   function increaseFont() {
