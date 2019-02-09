@@ -55,6 +55,10 @@
       <i class="fa fa-binoculars fa-lg fa-fw"></i>&nbsp;<span data-i18n="findInDocument"></span>
     </a></li>
     <li class="divider"></li>
+    <li><a id="htmlDetails" data-toggle="modal" data-target="#htmlDetailsModal">
+      <i class="fa fa-info-circle fa-lg fa-fw"></i>&nbsp;<span data-i18n="htmlDetails"></span>
+    </a></li>
+    <li class="divider"></li>
     <li>
       <div id="readabilityFont">
         <i class="fa fa-font fa-lg fa-fw"></i>&nbsp;
@@ -121,6 +125,34 @@
       <div class="modal-footer">
         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check fa-lg"></i>
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="htmlDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a type="button" id="closeHTMLDetails" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
+        <h4 class="modal-title" data-i18n="htmlDetailsTitle"></h4>
+      </div>
+      <ul class="openSource">
+        <div class="modal-body">
+            <button id="openSourceURL">
+              <i class="fa fa-external-link-square fa-fw"></i>&nbsp;<span data-i18n="openSourceURL"></span>
+            </button>
+        </div>
+      </ul>
+         <table class="table table-striped table-condensed">
+          <thead></thead>
+          <tbody id="htmlDetailsBody">
+            <tr id="exifRow"><th></th><td></td></tr>
+          </tbody>
+         </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check fa-lg"></i></button>
       </div>
     </div>
   </div>

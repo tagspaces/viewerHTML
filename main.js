@@ -283,7 +283,6 @@ function setContent(content, fileDirectory) {
         message: 'No source URL found in this file!'
       });
     }
-
   });
 
   function increaseFont() {
