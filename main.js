@@ -285,6 +285,23 @@ function setContent(content, fileDirectory) {
     }
   });
 
+  $('#openSourceURLdateHTML').on('click', () => {
+    if (sourceURL && sourceURL.length > 0) {
+      sendMessageToHost({ command: 'openLinkExternally', link: sourceURL });
+    } else {
+      sendMessageToHost({
+        command: 'showAlertDialog',
+        title: 'Error',
+        message: 'No source URL found in this file!'
+      });
+    }
+  });
+
+  const sourceHTMLRegex = /data-screenshot="([^"]*)"/m;
+  const regexHTML = new RegExp(sourceHTMLRegex);
+
+  $('#html-data-container').text(regexHTML);
+
   function increaseFont() {
     try {
       const style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');

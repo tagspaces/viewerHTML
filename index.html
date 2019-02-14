@@ -136,21 +136,13 @@
         <a type="button" id="closeHTMLDetails" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
         <h4 class="modal-title" data-i18n="htmlDetailsTitle"></h4>
       </div>
-      <ul class="openSource">
-        <div class="modal-body">
-            <button id="openSourceURL">
-              <i class="fa fa-external-link-square fa-fw"></i>&nbsp;<span data-i18n="openSourceURL"></span>
-            </button>
-        </div>
-      </ul>
-         <table class="table table-striped table-condensed">
-          <thead></thead>
-          <tbody id="htmlDetailsBody">
-            <tr id="exifRow"><th></th><td></td></tr>
-          </tbody>
-         </table>
-        </div>
-      </div>
+      <div class="modal-body">
+        <button>
+          <a id="openSourceURLdateHTML">
+            <i class="fa fa-external-link-square fa-fw"></i>&nbsp;<span data-i18n="openSourceURL"></span>
+          </a>
+        </button>
+      <div id="html-data-container"></div>
       <div class="modal-footer">
         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check fa-lg"></i></button>
       </div>
