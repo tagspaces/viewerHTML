@@ -311,7 +311,7 @@ function setContent(content, fileDirectory) {
 
   $('#html-data-scrappedon').text(scrappedon);
 
-  $('#html-data-screenshot').append(screenshot);
+  $('#html-data-screenshot').attr('src', screenshot);
 
   function increaseFont() {
     try {

@@ -21,6 +21,11 @@
   <link rel="stylesheet" href="libs/markdown-css/solarized-dark.css"/>
   <link rel="stylesheet" href="libs/markdown-css/clearness.css"/>
   <link rel="stylesheet" href="libs/markdown-css/clearness-dark.css"/>
+  <style>
+      img{
+        max-width:100%
+      }
+    </style>
 </head>
 <body>
 <div id="searchToolbar" style="display: none;">
@@ -137,21 +142,15 @@
         <h4 class="modal-title" data-i18n="htmlDetailsTitle"></h4>
       </div>
       <div class="modal-body">
-        <ul>
-          <li>
-        <button>
-          <a id="openSourceURLdateHTML">
-            <i class="fa fa-external-link-square fa-fw"></i>&nbsp;<span data-i18n="openSourceURL"></span>
-          </a>
+        <h5>
+        <button class="btn btn-primary" role="button" id="openSourceURLdateHTML">
+          <span data-i18n="openSourceURL"></span>
         </button>
-      </li>
-      <li>
-      <div id="html-data-scrappedon"></div>
-    </li>
-    <li>
-      <div id="html-data-screenshot"></div>
-    </li>
-        </ul>
+        </h5>
+        <h5>
+          <span data-i18n="webPageSavedOn"></span><p id="html-data-scrappedon"></p>
+        </h5>
+      <img id="html-data-screenshot" src="screenshot">
       <div class="modal-footer">
         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check fa-lg"></i></button>
       </div>
