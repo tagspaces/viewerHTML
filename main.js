@@ -6,6 +6,8 @@ sendMessageToHost({ command: 'loadDefaultTextContent' });
 
 let $htmlContent;
 let sourceURL;
+let screenshot;
+let scrappedon;
 
 $(document).ready(init);
 
@@ -168,6 +170,16 @@ function setContent(content, fileDirectory) {
   const regexMatcher = content.match(regex);
   sourceURL = regexMatcher ? regexMatcher[1] : undefined;
 
+  const screenshotRegex = /data-screenshot="([^"]*)"/m;
+  const regexscreenshot = new RegExp(screenshotRegex);
+  const regexMatcherScreenshot = content.match(regexscreenshot);
+  screenshot = regexMatcherScreenshot ? regexMatcherScreenshot[1] : undefined;
+
+  const scrappedonRegex = /data-scrappedon="([^"]*)"/m;
+  const regexscrappedon = new RegExp(scrappedonRegex);
+  const regexMatcherScrappedon = content.match(regexscrappedon);
+  scrappedon = regexMatcherScrappedon ? regexMatcherScrappedon[1] : undefined;
+
   // removing all scripts from the document
   const cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 
@@ -283,8 +295,24 @@ function setContent(content, fileDirectory) {
         message: 'No source URL found in this file!'
       });
     }
-
   });
+
+  $('#openSourceURLdateHTML').on('click', () => {
+    if (sourceURL && sourceURL.length > 0) {
+      sendMessageToHost({ command: 'openLinkExternally', link: sourceURL });
+    } else {
+      sendMessageToHost({
+        command: 'showAlertDialog',
+        title: 'Error',
+        message: 'No source URL found in this file!'
+      });
+    }
+  });
+
+  $('#html-data-scrappedon').text(scrappedon);
+  $('#html-data-sourceurl').text(sourceURL);
+  // $('#html-data-sourceurl').attr('title', sourceURL);
+  $('#html-data-screenshot').attr('src', screenshot);
 
   function increaseFont() {
     try {
