@@ -310,7 +310,8 @@ function setContent(content, fileDirectory) {
   });
 
   $('#html-data-scrappedon').text(scrappedon);
-
+  $('#html-data-sourceurl').text(sourceURL);
+  // $('#html-data-sourceurl').attr('title', sourceURL);
   $('#html-data-screenshot').attr('src', screenshot);
 
   function increaseFont() {

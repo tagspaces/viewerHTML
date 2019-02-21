@@ -134,18 +134,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <a type="button" id="closeHTMLDetails" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
-        <h4 class="modal-title" data-i18n="htmlDetailsTitle"></h4>
+        <h4 class="modal-title" data-i18n="htmlDetails"></h4>
       </div>
       <div class="modal-body">
-        <h5>
-        <button class="btn btn-primary" role="button" id="openSourceURLdateHTML">
-          <span data-i18n="openSourceURL"></span>
-        </button>
-        </h5>
-        <h5>
-          <span data-i18n="webPageSavedOn"></span><p id="html-data-scrappedon"></p>
-        </h5>
-      <img id="html-data-screenshot" src="screenshot">
+        <span data-i18n="sourceURL"></span>:&nbsp;<span id="html-data-sourceurl"></span><br>
+        <button data-i18n="openSourceURL" class="btn" role="button" id="openSourceURLdateHTML">
+        </button><br>
+        <span data-i18n="webPageSavedOn"></span>:&nbsp;<span id="html-data-scrappedon"></span>
+        <img id="html-data-screenshot" src="#" />
+      </div>
       <div class="modal-footer">
         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check fa-lg"></i></button>
       </div>
