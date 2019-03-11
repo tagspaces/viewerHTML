@@ -17,6 +17,9 @@
     "increasingFontSize": "Vergroot Lettertype",
     "decreasingFontSize": "Verklein Lettertype",
     "changeBackgroundColor": "Verander Achtergrond Kleur",
-    "openSourceURL": "Open bron URL",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

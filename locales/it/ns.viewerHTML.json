@@ -17,6 +17,9 @@
     "increasingFontSize": "Aumenta dimensione testo",
     "decreasingFontSize": "Diminuisci dimensione testo",
     "changeBackgroundColor": "Cambia colore di sfondo",
-    "openSourceURL": "Apri URL",
+    "sourceURL": "Pagina Web dell'URL di origine",
+    "openSourceURL": "Apri l'URL nel tuo browser predefinito",
+    "htmlDetails": "Web Scraping",
+    "webPageSavedOn": "Pagina Web salvata",
     "-": "-"
 }

@@ -17,6 +17,9 @@
     "increasingFontSize": "フォントのサイズ拡大",
     "decreasingFontSize": "フォントのサイズ縮小",
     "changeBackgroundColor": "背景色の変更",
-    "openSourceURL": "URL先を開く",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

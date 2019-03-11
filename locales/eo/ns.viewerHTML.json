@@ -17,6 +17,9 @@
     "increasingFontSize": "Pligrandigi Tiparon",
     "decreasingFontSize": "Malpligrandigi Tiparon",
     "changeBackgroundColor": "Ŝanĝi Fonan Koloron",
-    "openSourceURL": "URL De Malferma Kodo",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

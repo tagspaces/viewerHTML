@@ -14,9 +14,12 @@
     "readabilityOff": "Close reader mode",
     "toSansSerifFont": "Apply sans serif font",
     "toSerifFont": "Apply serif font",
-    "increasingFontSize": "Increase Font Size",
-    "decreasingFontSize": "Decrease Font Size",
-    "changeBackgroundColor": "Change Background Color",
-    "openSourceURL": "Open source URL",
+    "increasingFontSize": "Zväčšiť veľkosť písma",
+    "decreasingFontSize": "Zmenšiť veľkosť písma",
+    "changeBackgroundColor": "Zmeniť farbu pozadia",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

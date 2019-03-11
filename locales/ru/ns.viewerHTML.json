@@ -17,6 +17,9 @@
     "increasingFontSize": "Увеличить шрифт",
     "decreasingFontSize": "Уменьшить шрифт",
     "changeBackgroundColor": "Изменить цвет фона",
-    "openSourceURL": "Открыть исходный URL",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

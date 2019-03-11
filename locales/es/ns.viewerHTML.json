@@ -17,6 +17,9 @@
     "increasingFontSize": "Aumentar el tamaño de la letra",
     "decreasingFontSize": "Disminuir el tamaño de la letra",
     "changeBackgroundColor": "Cambiar el color de fondo",
-    "openSourceURL": "Open source URL",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

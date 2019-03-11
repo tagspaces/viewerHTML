@@ -17,6 +17,9 @@
     "increasingFontSize": "Augmenter la taille de la police",
     "decreasingFontSize": "Diminuer la taille de la police",
     "changeBackgroundColor": "Changer la couleur de fond",
-    "openSourceURL": "URL Open source ",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

@@ -17,6 +17,9 @@
     "increasingFontSize": "增大字号",
     "decreasingFontSize": "减小字号",
     "changeBackgroundColor": "改变背景色",
-    "openSourceURL": "打开源网址",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

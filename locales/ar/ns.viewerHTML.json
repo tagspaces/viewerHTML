@@ -1,13 +1,13 @@
 {
-    "findInDocument": "Find in document",
-    "startSearch": "Start Search",
+    "findInDocument": "إبحث في الوتيقة",
+    "startSearch": "إبدأ البحث",
     "cancelSearch": "Cancel Search",
     "zoomOut": "Zoom Out",
     "zoomIn": "Zoom In",
     "zoomReset": "Zoom Reset",
     "changeTheme": "Change Theme",
     "resetTheme": "Reset Theme",
-    "print": "Print",
+    "print": "إطبع",
     "about": "About",
     "aboutTitle": "About HTML Viewer",
     "readabilityOn": "Open reader mode",
@@ -17,6 +17,9 @@
     "increasingFontSize": "Increase Font Size",
     "decreasingFontSize": "Decrease Font Size",
     "changeBackgroundColor": "Change Background Color",
-    "openSourceURL": "Open source URL",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

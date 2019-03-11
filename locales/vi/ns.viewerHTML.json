@@ -17,6 +17,9 @@
     "increasingFontSize": "Tăng Kích Cỡ Phông Chữ",
     "decreasingFontSize": "Giảm Kích Cỡ Phông Chữ",
     "changeBackgroundColor": "Đổi Màu Nề",
-    "openSourceURL": "URL nguồn mở",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

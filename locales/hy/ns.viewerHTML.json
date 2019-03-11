@@ -17,6 +17,9 @@
     "increasingFontSize": "Մեծացնել տառաչափը",
     "decreasingFontSize": "Փոքրացնել տառաչափը",
     "changeBackgroundColor": "Փոխել խորքի գույնը",
-    "openSourceURL": "Open source URL",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }

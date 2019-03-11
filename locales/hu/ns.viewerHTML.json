@@ -17,6 +17,9 @@
     "increasingFontSize": "Betűméret növelése",
     "decreasingFontSize": "Betűméret csökkentése",
     "changeBackgroundColor": "Háttérszín megváltoztatása",
-    "openSourceURL": "Forrás URL megnyitása",
+    "sourceURL": "Web Page Source URL",
+    "openSourceURL": "Open Source URL in your default browser",
+    "htmlDetails": "Web Scraping Details",
+    "webPageSavedOn": "Web Page Saved On",
     "-": "-"
 }
