@@ -26,69 +26,116 @@ function init() {
 
   $htmlContent = $('#htmlContent');
 
-  const styles = ['', 'solarized-dark', 'github', 'metro-vibes', 'clearness', 'clearness-dark'];
+  const styles = [
+    '',
+    'solarized-dark',
+    'github',
+    'metro-vibes',
+    'clearness',
+    'clearness-dark'
+  ];
   let currentStyleIndex = 0;
   if (extSettings && extSettings.styleIndex) {
     currentStyleIndex = extSettings.styleIndex;
   }
 
-  const zoomSteps = ['zoomSmallest', 'zoomSmaller', 'zoomSmall', 'zoomDefault', 'zoomLarge', 'zoomLarger', 'zoomLargest'];
+  const zoomSteps = [
+    'zoomSmallest',
+    'zoomSmaller',
+    'zoomSmall',
+    'zoomDefault',
+    'zoomLarge',
+    'zoomLarger',
+    'zoomLargest'
+  ];
   let currentZoomState = 3;
   if (extSettings && extSettings.zoomState) {
     currentZoomState = extSettings.zoomState;
   }
 
   $htmlContent.removeClass();
-  $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
+  $htmlContent.addClass(
+    'markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]
+  );
 
+  $('#changeStyleButton').off();
   $('#changeStyleButton').on('click', () => {
     currentStyleIndex = currentStyleIndex + 1;
     if (currentStyleIndex >= styles.length) {
       currentStyleIndex = 0;
     }
     $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
+    $htmlContent.addClass(
+      'markdown ' +
+        styles[currentStyleIndex] +
+        ' ' +
+        zoomSteps[currentZoomState]
+    );
     saveExtSettings();
   });
 
+  $('#resetStyleButton').off();
   $('#resetStyleButton').on('click', () => {
     currentStyleIndex = 0;
     $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
+    $htmlContent.addClass(
+      'markdown ' +
+        styles[currentStyleIndex] +
+        ' ' +
+        zoomSteps[currentZoomState]
+    );
     saveExtSettings();
   });
 
+  $('#zoomInButton').off();
   $('#zoomInButton').on('click', () => {
     currentZoomState += 1;
     if (currentZoomState >= zoomSteps.length) {
       currentZoomState = 6;
     }
     $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
+    $htmlContent.addClass(
+      'markdown ' +
+        styles[currentStyleIndex] +
+        ' ' +
+        zoomSteps[currentZoomState]
+    );
     saveExtSettings();
   });
 
+  $('#zoomOutButton').off();
   $('#zoomOutButton').on('click', () => {
     currentZoomState -= 1;
     if (currentZoomState < 0) {
       currentZoomState = 0;
     }
     $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
+    $htmlContent.addClass(
+      'markdown ' +
+        styles[currentStyleIndex] +
+        ' ' +
+        zoomSteps[currentZoomState]
+    );
     saveExtSettings();
   });
 
+  $('#zoomResetButton').off();
   $('#zoomResetButton').on('click', () => {
     currentZoomState = 3;
     $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + ' ' + zoomSteps[currentZoomState]);
+    $htmlContent.addClass(
+      'markdown ' +
+        styles[currentStyleIndex] +
+        ' ' +
+        zoomSteps[currentZoomState]
+    );
     saveExtSettings();
   });
 
   function saveExtSettings() {
     const settings = {
-      'styleIndex': currentStyleIndex,
-      'zoomState': currentZoomState
+      styleIndex: currentStyleIndex,
+      zoomState: currentZoomState
     };
     localStorage.setItem('viewerHTMLSettings', JSON.stringify(settings));
   }
@@ -106,7 +153,7 @@ function init() {
 
 // fixing embedding of local images
 function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
-  const hasURLProtocol = (url) => {
+  const hasURLProtocol = url => {
     return (
       url.indexOf('http://') === 0 ||
       url.indexOf('https://') === 0 ||
@@ -136,7 +183,7 @@ function fixingEmbeddingOfLocalImages($htmlContent, fileDirectory) {
       }
 
       $(link).off();
-      $(link).on('click', (e) => {
+      $(link).on('click', e => {
         e.preventDefault();
         if (path) {
           currentSrc = encodeURIComponent(path);
@@ -181,7 +228,10 @@ function setContent(content, fileDirectory) {
   scrappedon = regexMatcherScrappedon ? regexMatcherScrappedon[1] : undefined;
 
   // removing all scripts from the document
-  const cleanedBodyContent = bodyContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  const cleanedBodyContent = bodyContent.replace(
+    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+    ''
+  );
 
   $htmlContent = $('#htmlContent');
   $htmlContent.empty().append(cleanedBodyContent);
@@ -199,13 +249,14 @@ function setContent(content, fileDirectory) {
   const readabilityViewer = document.getElementById('htmlContent');
   const fontSize = 14;
 
+  $('#readabilityOn').off();
   $('#readabilityOn').on('click', () => {
     try {
       const documentClone = document.cloneNode(true);
       const article = new Readability(document.baseURI, documentClone).parse();
       $(readabilityViewer).html(article.content);
       fixingEmbeddingOfLocalImages($(readabilityViewer, fileDirectory));
-      readabilityViewer.style.fontSize = fontSize;//'large';
+      readabilityViewer.style.fontSize = fontSize; //'large';
       readabilityViewer.style.fontFamily = 'Helvetica, Arial, sans-serif';
       readabilityViewer.style.background = '#ffffff';
       readabilityViewer.style.color = '';
@@ -230,11 +281,12 @@ function setContent(content, fileDirectory) {
     }
   });
 
+  $('#readabilityOff').off();
   $('#readabilityOff').on('click', () => {
     $htmlContent.empty();
     $htmlContent.append(cleanedBodyContent);
     fixingEmbeddingOfLocalImages($htmlContent, fileDirectory);
-    readabilityViewer.style.fontSize = '';//'large';
+    readabilityViewer.style.fontSize = ''; //'large';
     readabilityViewer.style.fontFamily = '';
     readabilityViewer.style.color = '';
     readabilityViewer.style.background = '';
@@ -247,44 +299,52 @@ function setContent(content, fileDirectory) {
     $('#themeStyle').hide();
   });
 
-  $('#toSansSerifFont').on('click', (e) => {
+  $('#toSansSerifFont').off();
+  $('#toSansSerifFont').on('click', e => {
     e.stopPropagation();
     readabilityViewer.style.fontFamily = 'Helvetica, Arial, sans-serif';
   });
 
-  $('#toSerifFont').on('click', (e) => {
+  $('#toSerifFont').off();
+  $('#toSerifFont').on('click', e => {
     e.stopPropagation();
     readabilityViewer.style.fontFamily = 'Georgia, Times New Roman, serif';
   });
 
-  $('#increasingFontSize').on('click', (e) => {
+  $('#increasingFontSize').off();
+  $('#increasingFontSize').on('click', e => {
     e.stopPropagation();
     increaseFont();
   });
 
-  $('#decreasingFontSize').on('click', (e) => {
+  $('#decreasingFontSize').off();
+  $('#decreasingFontSize').on('click', e => {
     e.stopPropagation();
     decreaseFont();
   });
 
-  $('#whiteBackgroundColor').on('click', (e) => {
+  $('#whiteBackgroundColor').off();
+  $('#whiteBackgroundColor').on('click', e => {
     e.stopPropagation();
     readabilityViewer.style.background = '#ffffff';
     readabilityViewer.style.color = '';
   });
 
-  $('#blackBackgroundColor').on('click', (e) => {
+  $('#blackBackgroundColor').off();
+  $('#blackBackgroundColor').on('click', e => {
     e.stopPropagation();
     readabilityViewer.style.background = '#282a36';
     readabilityViewer.style.color = '#ffffff';
   });
 
-  $('#sepiaBackgroundColor').on('click', (e) => {
+  $('#sepiaBackgroundColor').off();
+  $('#sepiaBackgroundColor').on('click', e => {
     e.stopPropagation();
     readabilityViewer.style.color = '#5b4636';
     readabilityViewer.style.background = '#f4ecd8';
   });
 
+  $('#openSourceURL').off();
   $('#openSourceURL').on('click', () => {
     if (sourceURL && sourceURL.length > 0) {
       sendMessageToHost({ command: 'openLinkExternally', link: sourceURL });
@@ -297,6 +357,7 @@ function setContent(content, fileDirectory) {
     }
   });
 
+  $('#openSourceURLdateHTML').off();
   $('#openSourceURLdateHTML').on('click', () => {
     if (sourceURL && sourceURL.length > 0) {
       sendMessageToHost({ command: 'openLinkExternally', link: sourceURL });
@@ -316,17 +377,19 @@ function setContent(content, fileDirectory) {
 
   function increaseFont() {
     try {
-      const style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
+      const style = window
+        .getComputedStyle(readabilityViewer, null)
+        .getPropertyValue('font-size');
       console.log(style);
       console.debug(style);
       const fontSize = parseFloat(style);
       //if($('#readability-page-1').hasClass('page')){
       const page = document.getElementsByClassName('markdown');
       // console.log(page[0].style);
-      page[0].style.fontSize = (fontSize + 1) + 'px';
-      page[0].style[11] = (fontSize + 1) + 'px';
+      page[0].style.fontSize = fontSize + 1 + 'px';
+      page[0].style[11] = fontSize + 1 + 'px';
       //} else {
-      readabilityViewer.style.fontSize = (fontSize + 1) + 'px';
+      readabilityViewer.style.fontSize = fontSize + 1 + 'px';
       //}
     } catch (e) {
       console.log('Error handling : ' + e);
@@ -335,9 +398,11 @@ function setContent(content, fileDirectory) {
   }
 
   function decreaseFont() {
-    const style = window.getComputedStyle(readabilityViewer, null).getPropertyValue('font-size');
+    const style = window
+      .getComputedStyle(readabilityViewer, null)
+      .getPropertyValue('font-size');
     const fontSize = parseFloat(style);
-    readabilityViewer.style.fontSize = (fontSize - 1) + 'px';
+    readabilityViewer.style.fontSize = fontSize - 1 + 'px';
   }
 
   Mousetrap.bind(['command++', 'ctrl++'], () => {
