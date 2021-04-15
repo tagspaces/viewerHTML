@@ -17,9 +17,9 @@
     "increasingFontSize": "Øk fontstørrelse",
     "decreasingFontSize": "Minsk fontstørrelse",
     "changeBackgroundColor": "Endre bakgrunnsfarge ",
-    "sourceURL": "Web Page Source URL",
-    "openSourceURL": "Open Source URL in your default browser",
-    "htmlDetails": "Web Scraping Details",
-    "webPageSavedOn": "Web Page Saved On",
+    "sourceURL": "Kildenettadresse",
+    "openSourceURL": "Åpne kildeadresse i standard nettleser ",
+    "htmlDetails": "Nettskrapingdetaljer",
+    "webPageSavedOn": "Nettside lagret på",
     "-": "-"
 }
